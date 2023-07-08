@@ -1,5 +1,4 @@
 function Login() {
-    const [show, setShow] = React.useState(true);
     const [status, setStatus] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -25,6 +24,7 @@ function Login() {
             setStatus('Error: Password incorrect');
             return false
         }
+
         setStatus('')
         return true
     }
@@ -32,14 +32,12 @@ function Login() {
     function logIn() {
         if (!validate()) return;
         ctx.currentUser = email;
-        setShow(false)
     }
 
     function logOut() {
+        ctx.currentUser = null;
         setEmail('')
         setPassword('')
-        delete ctx.users.currentUser;
-        setShow(true)
     }
 
     return (
@@ -47,22 +45,50 @@ function Login() {
             bgcolor="warning"
             title="Login"
             status={status}
-            body={show ? (
-                <>
-                    Email address<br />
-                    <input type="input" className="form-control" id="email" placeholder="Enter Email" value={email} onChange={e => { setEmail(e.currentTarget.value) }} /><br />
-                    Password<br />
-                    <input type="input" className="form-control" id="password" placeholder="Enter Password" value={password} onChange={e => setPassword(e.currentTarget.value)} /><br />
-                    <button type="submit" className="btn btn-light" onClick={logIn} >Login</button>
-                </>
-            ) : (
-                <>
-                    <h5>You have successfully logged in</h5>
-                    <button type="submit" className="btn btn-light" onClick={logOut} >Log Out</button>
-
-                </>
-            )}
-
+            body={
+                ctx.currentUser === null ? (
+                    <>
+                        Email address<br />
+                        <input
+                            type="input"
+                            className="form-control"
+                            id="email"
+                            placeholder="Enter Email"
+                            value={email}
+                            onChange={e => { setEmail(e.currentTarget.value) }}
+                        />
+                        <br />
+                        Password
+                        <br />
+                        <input
+                            type="input"
+                            className="form-control"
+                            id="password"
+                            placeholder="Enter Password"
+                            value={password}
+                            onChange={e => setPassword(e.currentTarget.value)} />
+                        <br />
+                        <button
+                            type="submit"
+                            className="btn btn-light"
+                            onClick={() => logIn()}
+                        >
+                            Login
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <h5>You have successfully logged in</h5>
+                        <button
+                            type="submit"
+                            className="btn btn-light"
+                            onClick={() => logOut()}
+                        >
+                            Log Out
+                        </button>
+                    </>
+                )
+            }
         />
     )
 }
