@@ -13,7 +13,7 @@ function Deposit() {
         return balance
     }
 
-    function validate(field) { // only validates that there is something in the field should be expanded to actually validate the fields.
+    function validate(field) {
         if (!field) {
             setStatus('Error: No amount entered');
             setTimeout(() => setStatus(''), 3000);
@@ -22,12 +22,23 @@ function Deposit() {
         return true;
     }
 
-
     function handleDeposit() {
-        console.log(deposit);
         if (!validate(deposit, 'deposit')) return;
-        setBalance(balance + deposit);
-        findCurrentUser().balance += deposit;
+
+        if (isNaN(deposit)) {
+            setStatus('Error: Deposit must be a number');
+            return;
+        }
+
+        const depositNum = Number(deposit);
+        if (depositNum <= 0) {
+            setStatus('Error: Despoit ammount must be positive');
+            return;
+        }
+
+        setBalance(balance + depositNum);
+        findCurrentUser().balance += depositNum;
+        setStatus('Deposite sucessful');
     }
 
     return (
@@ -37,18 +48,16 @@ function Deposit() {
             status={status}
             body={ctx.currentUser !== null ? (
                 <>
-                    {/* still need to add the visiable balance to this card and get the format correct and get the toggle of the show not show to to work properly*/}
+                    {/*TODO: still need the format correct*/}
                     Balance <br /> {balance === null ? initialieBalance() : balance} <br />
                     Deposit Amount<br />
-                    <input type="input" className="form-control" id="deposit" placeholder="Enter Amount" value={deposit} onChange={e => setDeposit(Number(e.currentTarget.value))} /><br />
-                    <button type="submit" className="btn btn-light" onClick={handleDeposit}>Deposit</button>
+                    <input type="input" className="form-control" id="deposit" placeholder="Enter Amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)} /><br />
+                    <button type="submit" className="btn btn-light" onClick={handleDeposit} disabled={deposit === ''}>Deposit</button>
                 </>
             ) : (
                 <>
                     <h5>Please Login</h5>
-                    <button type="submit" className="btn btn-light"><a href='/login/' >Click to Go to Login Page</a></button>
-                    {/* need to fix routing on this button as it doesn't work at all. */}
-
+                    <button type="submit" className="btn btn-light"><a href='#/login/' >Click to Go to Login Page</a></button>
                 </>
             )}
         />

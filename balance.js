@@ -24,9 +24,7 @@ function Balance() {
             ) : (
                 <>
                     <h5>Please Login</h5>
-                    <button type="submit" className="btn btn-light"><a href='/login/' >Click to Go to Login Page</a></button>
-                    {/* need to fix routing on this button as it doesn't work at all. */}
-
+                    <button type="submit" className="btn btn-light"><a href='#/login/' >Click to Go to Login Page</a></button>
                 </>
             )}
         />
