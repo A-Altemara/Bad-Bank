@@ -8,8 +8,9 @@ function AllData() {
                 <>
                     User Email Password Balance <br />
                     {ctx.users.map(
-                        (user) => (
-                            <>{user.name + ' ' + user.email + ' ' + user.password + ' ' + user.balance}</>
+                        // TODO: Add table formating
+                        (user, index) => (
+                            <p key={index}>{user.name + ' ' + user.email + ' ' + user.password + ' ' + user.balance}</p>
                         )
                     )}
                 </>

@@ -15,7 +15,7 @@ function Balance() {
             status={status}
             body={ctx.currentUser !== null ? (
                 <>
-                    {/* still need to add the visiable balance to this card and get the format correct and get the toggle of the show not show to to work properly*/}
+                    {/* TODO: still need format correct */}
                     Balance <br />
                     Your Balance is<br />
                     {findCurrentUser().balance}
