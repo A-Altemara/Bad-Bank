@@ -8,7 +8,7 @@ function Deposit() {
         return ctx.users.find((user) => user.email === ctx.currentUser);
     }
 
-    function initialieBalance() {
+    function initializeBalance() {
         setBalance(findCurrentUser().balance)
         return balance
     }
@@ -49,7 +49,7 @@ function Deposit() {
             body={ctx.currentUser !== null ? (
                 <>
                     {/*TODO: still need the format correct*/}
-                    Balance <br /> {balance === null ? initialieBalance() : balance} <br />
+                    Balance <br /> {balance === null ? initializeBalance() : balance} <br />
                     Deposit Amount<br />
                     <input type="input" className="form-control" id="deposit" placeholder="Enter Amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)} /><br />
                     <button type="submit" className="btn btn-light" onClick={handleDeposit} disabled={deposit === ''}>Deposit</button>

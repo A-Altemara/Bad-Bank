@@ -1,4 +1,4 @@
-import { FindCurrentUser } from "./findCurrentUser.js"
+// import { FindCurrentUser } from "./FindCurrentUser.js"
 import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
 
@@ -8,10 +8,13 @@ export function Deposit() {
     const [deposit, setDeposit] = useState('');
     const [balance, setBalance] = useState(null);
 
-    FindCurrentUser()
+    //TODO: Extract into separate component as stretch goal
+    function findCurrentUser() {
+        return ctx.users.find((user) => user.email === ctx.currentUser);
+    }
 
-    function initialieBalance() {
-        setBalance(FindCurrentUser().balance)
+    function initializeBalance() {
+        setBalance(findCurrentUser().balance)
         return balance
     }
 
@@ -39,8 +42,8 @@ export function Deposit() {
         }
 
         setBalance(balance + depositNum);
-        FindCurrentUser().balance += depositNum;
-        setStatus('Deposite sucessful');
+        findCurrentUser().balance += depositNum;
+        setStatus('Deposit sucessful');
     }
 
     return (
@@ -48,10 +51,10 @@ export function Deposit() {
             bgcolor="primary"
             header='Deposit'
             status={status}
-            body={ctx.currentUser !== null ? (
+            body={ctx.currentUser ? (
                 <>
                     {/*TODO: still need the format correct*/}
-                    Balance <br /> {balance === null ? initialieBalance() : balance} <br />
+                    Balance <br /> {balance ? balance : initializeBalance()} <br />
                     Deposit Amount<br />
                     <input type="input" className="form-control" id="deposit" placeholder="Enter Amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)} /><br />
                     <button type="submit" className="btn btn-light" onClick={handleDeposit} disabled={deposit === ''}>Deposit</button>

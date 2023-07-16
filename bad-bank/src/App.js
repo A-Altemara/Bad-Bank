@@ -1,6 +1,5 @@
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import bootstrap from 'bootstrap'
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { NavBar } from './components/navbar';
 import { UserContext } from './components/context';
@@ -14,17 +13,17 @@ import { AllData } from './components/alldata';
 
 function App() {
   return (
-    <HashRouter>
+    <HashRouter basename="/">
       <NavBar />
       <UserContext.Provider value={{ currentUser: null, users: [{ name: 'able', email: 'able@mit.edu', password: 'secret', balance: 100 }] }}>
         <Routes>
-          <Route path="/" exact component={Home} />
-          <Route path="/CreateAccount/" exact component={CreateAccount} />
-          <Route path="/login/" exact component={Login} />
-          <Route path="/deposit/" exact component={Deposit} />
-          <Route path="/withdraw/" exact component={Withdraw} />
-          <Route path="/balance/" exact component={Balance} />
-          <Route path="/alldata/" exact component={AllData} />
+          <Route path="/" element={<Home />} />
+          <Route path="/CreateAccount/" element={<CreateAccount />} />
+          <Route path="/login/" element={<Login />} />
+          <Route path="/deposit/" element={<Deposit />} />
+          <Route path="/withdraw/" element={<Withdraw />} />
+          <Route path="/balance/" element={<Balance />} />
+          <Route path="/alldata/" element={<AllData />} />
         </Routes>
       </UserContext.Provider>
     </HashRouter>

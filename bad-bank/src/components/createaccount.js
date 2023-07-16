@@ -1,4 +1,3 @@
-import { FindCurrentUser } from "./findCurrentUser.js"
 import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
 
@@ -10,7 +9,8 @@ export function CreateAccount() {
     const [password, setPassword] = useState('');
     const ctx = useContext(UserContext);
 
-    function validate(field, label) { // only validates that there is something in the field should be expanded to actually validate the fields.
+    // only validates that there is something in the field should be expanded to actually validate the fields.
+    function validate(field, label) {
         if (!field) {
             setStatus('Error: ' + label + ' must not be blank');
             setTimeout(() => setStatus(''), 3000);
@@ -19,7 +19,8 @@ export function CreateAccount() {
         return true;
     }
 
-    function handleCreate() { // this shows the values in the console to check its working, revalidates the data and pushes the user into our context and hides our user and allows the user to add another.
+    // this shows the values in the console to check its working, revalidates the data and pushes the user into our context and hides our user and allows the user to add another.
+    function handleCreate() {
         console.log(name, email, password);
         if (!validate(name, 'Name')) return;
         if (!validate(email, 'Email')) return;
@@ -37,6 +38,7 @@ export function CreateAccount() {
         setName('');
         setEmail('');
         setPassword('');
+        setStatus('');
         setShow(true);
     }
 

@@ -1,4 +1,4 @@
-import { FindCurrentUser } from "./findCurrentUser.js"
+// import { FindCurrentUser } from "./FindCurrentUser.js"
 import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
 
@@ -8,10 +8,13 @@ export function Withdraw() {
     const [withdrawal, setWithdrawal] = useState('');
     const [balance, setBalance] = useState(null);
 
-    FindCurrentUser()
+    //TODO: Extract into separate component as stretch goal
+    function findCurrentUser() {
+        return ctx.users.find((user) => user.email === ctx.currentUser);
+    }
 
-    function initialieBalance() {
-        setBalance(FindCurrentUser().balance)
+    function initializeBalance() {
+        setBalance(findCurrentUser().balance)
         return balance
     }
 
@@ -45,7 +48,7 @@ export function Withdraw() {
         }
 
         setBalance(balance - withdrawalNum);
-        FindCurrentUser().balance -= withdrawalNum;
+        findCurrentUser().balance -= withdrawalNum;
         setStatus('Withdrawal sucessful')
     }
 
@@ -54,10 +57,10 @@ export function Withdraw() {
             bgcolor="primary"
             header='Withdrawal'
             status={status}
-            body={ctx.currentUser !== null ? (
+            body={ctx.currentUser ? (
                 <>
                     {/*TODO: format correct*/}
-                    Balance <br /> {balance === null ? initialieBalance() : balance} <br />
+                    Balance <br /> {balance ? balance : initializeBalance()} <br />
                     Amount<br />
                     <input type="input" className="form-control" id="" placeholder="Enter Amount" value={withdrawal} onChange={e => setWithdrawal(e.currentTarget.value)} /><br />
                     <button type="submit" className="btn btn-light" onClick={handleWithdrawal} disabled={withdrawal === ''}>Withdraw</button>
