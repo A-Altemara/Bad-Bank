@@ -50,7 +50,7 @@ export function Login() {
 
     return (
         <Card
-            bgcolor="warning"
+            bgcolor="primary"
             title="Login"
             status={status}
             body={!loggedIn ? (

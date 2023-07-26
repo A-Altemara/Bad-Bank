@@ -59,8 +59,7 @@ export function Withdraw() {
             status={status}
             body={ctx.currentUser ? (
                 <>
-                    {/*TODO: format correct*/}
-                    Balance <br /> {balance ? balance : initializeBalance()} <br />
+                    Current Account Balance {balance ? balance : initializeBalance()} <br />
                     Amount<br />
                     <input type="input" className="form-control" id="" placeholder="Enter Amount" value={withdrawal} onChange={e => setWithdrawal(e.currentTarget.value)} /><br />
                     <button type="submit" className="btn btn-light" onClick={handleWithdrawal} disabled={withdrawal === ''}>Withdraw</button>

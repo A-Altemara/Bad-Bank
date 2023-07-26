@@ -53,8 +53,7 @@ export function Deposit() {
             status={status}
             body={ctx.currentUser ? (
                 <>
-                    {/*TODO: still need the format correct*/}
-                    Balance <br /> {balance ? balance : initializeBalance()} <br />
+                    Current Account Balance {balance ? balance : initializeBalance()} <br />
                     Deposit Amount<br />
                     <input type="input" className="form-control" id="deposit" placeholder="Enter Amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)} /><br />
                     <button type="submit" className="btn btn-light" onClick={handleDeposit} disabled={deposit === ''}>Deposit</button>

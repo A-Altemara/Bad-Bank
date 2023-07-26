@@ -8,7 +8,7 @@ export function Home() {
             header="BadBank Landing Page"
             title="Welcome to the bank."
             text="You can use this bank."
-            body={<img src="./src/pictures/bank.png" className="img-fluid" alt="bank outline" />}
+            body={<img src="bad-bank/src/pictures/bank-pic.jpeg" className="img-fluid" alt="marble bank" />}
         />
     )
 }
