@@ -50,3 +50,7 @@ nav {
 	background-color: rgb(17, 17, 94) !important;
 	color: white !important;
 }
+
+.card-body {
+	min-height: 300px;
+}

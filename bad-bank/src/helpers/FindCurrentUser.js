@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "./context";
+import { UserContext } from "../components/context";
 
 // TODO: get extracted componenet working, currently not functional.
 export function FindCurrentUser() {

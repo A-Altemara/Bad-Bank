@@ -1,6 +1,8 @@
 // import { FindCurrentUser } from "./FindCurrentUser.js"
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext, Card } from "./context";
+// import InitializeBalance from "../initializeBalance";
+import useValidateAmounts from "../helpers/useValidateAmounts";
 
 export function Deposit() {
     const ctx = useContext(UserContext);
@@ -8,42 +10,38 @@ export function Deposit() {
     const [deposit, setDeposit] = useState('');
     const [balance, setBalance] = useState(null);
 
+
+    const validationResult = useValidateAmounts(deposit)
+
+
+
+
     //TODO: Extract into separate component as stretch goal
     function findCurrentUser() {
         return ctx.users.find((user) => user.email === ctx.currentUser);
     }
 
+    //TODO: Extract into separat component as stretch goal
     function initializeBalance() {
         setBalance(findCurrentUser().balance)
         return balance
     }
 
-    function validate(field) {
-        if (!field) {
-            setStatus('Error: No amount entered');
-            setTimeout(() => setStatus(''), 3000);
-            return false
-        }
-        return true;
-    }
 
     function handleDeposit() {
-        if (!validate(deposit, 'deposit')) return;
 
-        if (isNaN(deposit)) {
-            setStatus('Error: Deposit must be a number');
+        //TODO handle deposit button inactive
+        if (validationResult) {
+            setStatus(`Error Deposit ${validationResult}`);
+            console.log('validation result exists in deposit.js')
             return;
         }
 
         const depositNum = Number(deposit);
-        if (depositNum <= 0) {
-            setStatus('Error: Despoit ammount must be positive');
-            return;
-        }
 
         setBalance(balance + depositNum);
         findCurrentUser().balance += depositNum;
-        setStatus('Deposit sucessful');
+        setStatus('Deposit successful');
     }
 
     return (
@@ -56,6 +54,7 @@ export function Deposit() {
                     Current Account Balance {balance ? balance : initializeBalance()} <br />
                     Deposit Amount<br />
                     <input type="input" className="form-control" id="deposit" placeholder="Enter Amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)} /><br />
+                    {/* TODO remove diable once added to context */}
                     <button type="submit" className="btn btn-light" onClick={handleDeposit} disabled={deposit === ''}>Deposit</button>
                 </>
             ) : (

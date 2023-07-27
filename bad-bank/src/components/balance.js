@@ -18,9 +18,8 @@ export function Balance() {
             body={ctx.currentUser ? (
                 <>
                     {/* TODO: still need format correct */}
-                    Balance <br />
-                    Your Balance is<br />
-                    {findCurrentUser().balance}
+
+                    Your Balance is {findCurrentUser().balance}
 
                 </>
             ) : (

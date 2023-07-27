@@ -1,12 +1,17 @@
 // import { FindCurrentUser } from "./FindCurrentUser.js"
 import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
+import useValidateAmounts from "../helpers/useValidateAmounts";
+
 
 export function Withdraw() {
     const ctx = useContext(UserContext);
     const [status, setStatus] = useState('');
     const [withdrawal, setWithdrawal] = useState('');
     const [balance, setBalance] = useState(null);
+
+    const validationResult = useValidateAmounts(withdrawal)
+
 
     //TODO: Extract into separate component as stretch goal
     function findCurrentUser() {
@@ -18,29 +23,16 @@ export function Withdraw() {
         return balance
     }
 
-    function validate(field) {
-        if (!field) {
-            setStatus('Error: No amount entered');
-            setTimeout(() => setStatus(''), 3000);
-            return false
-        }
-        return true;
-    }
-
 
     function handleWithdrawal() {
-        if (!validate(withdrawal, 'withdrawal')) return;
 
-        if (isNaN(withdrawal)) {
-            setStatus('Error: Withdrawal must be a number');
+        if (validationResult) {
+            setStatus(`Error Withdrawal ${validationResult}`);
+            console.log('validation result exists in withdrawl.js')
             return;
         }
 
         const withdrawalNum = Number(withdrawal);
-        if (withdrawalNum <= 0) {
-            setStatus('Error: Withdrawal ammount must be positive');
-            return;
-        }
 
         if (withdrawalNum > balance) {
             setStatus('Insufficient funds.');
