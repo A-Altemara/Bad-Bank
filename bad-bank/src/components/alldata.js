@@ -9,13 +9,34 @@ export function AllData() {
             header='All Data'
             body={
                 <>
-                    User Email Password Balance <br />
-                    {ctx.users.map(
-                        // TODO: Add table formating
-                        (user, index) => (
-                            <p key={index}>{user.name + ' ' + user.email + ' ' + user.password + ' ' + user.balance}</p>
-                        )
-                    )}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {ctx.users.map(
+                                (user, index) => (
+                                    <tr key={index}>
+                                        <th scope="row">{index}</th>
+                                        <td>{user.name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.password}</td>
+                                        <td>{user.balance}</td>
+                                    </tr>
+                                )
+                            )}
+
+
+                        </tbody>
+                    </table>
+
+
                 </>
             }
         />
