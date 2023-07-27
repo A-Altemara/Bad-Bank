@@ -1,15 +1,14 @@
-// import { FindCurrentUser } from "./FindCurrentUser.js"
 import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
+import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
+
 
 export function Balance() {
     const ctx = useContext(UserContext);
     const [status, setStatus] = useState('');
 
-    //TODO: Extract into separate component as stretch goal
-    function findCurrentUser() {
-        return ctx.users.find((user) => user.email === ctx.currentUser);
-    }
+    const currentUser = useFindCurrentUser()
+
     return (
         <Card
             bgcolor="primary"
@@ -17,9 +16,7 @@ export function Balance() {
             status={status}
             body={ctx.currentUser ? (
                 <>
-                    {/* TODO: still need format correct */}
-
-                    Your Balance is {findCurrentUser().balance}
+                    Your Balance is {currentUser.balance}
 
                 </>
             ) : (

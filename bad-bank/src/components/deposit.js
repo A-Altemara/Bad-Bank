@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
 // import InitializeBalance from "../initializeBalance";
 import useValidateAmounts from "../helpers/useValidateAmounts";
+import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
 
 export function Deposit() {
     const ctx = useContext(UserContext);
@@ -12,15 +13,11 @@ export function Deposit() {
 
 
     const validationResult = useValidateAmounts(deposit)
-
-    //TODO: Extract into separate component as stretch goal
-    function findCurrentUser() {
-        return ctx.users.find((user) => user.email === ctx.currentUser);
-    }
+    const currentUser = useFindCurrentUser()
 
     //TODO: Extract into separat component as stretch goal
     function initializeBalance() {
-        setBalance(findCurrentUser().balance)
+        setBalance(currentUser.balance)
         return balance
     }
 
@@ -37,7 +34,7 @@ export function Deposit() {
         const depositNum = Number(deposit);
 
         setBalance(balance + depositNum);
-        findCurrentUser().balance += depositNum;
+        currentUser.balance += depositNum;
         setStatus('Deposit successful');
     }
 

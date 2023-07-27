@@ -1,7 +1,7 @@
-// import { FindCurrentUser } from "./FindCurrentUser.js"
 import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
 import useValidateAmounts from "../helpers/useValidateAmounts";
+import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
 
 
 export function Withdraw() {
@@ -11,15 +11,10 @@ export function Withdraw() {
     const [balance, setBalance] = useState(null);
 
     const validationResult = useValidateAmounts(withdrawal)
-
-
-    //TODO: Extract into separate component as stretch goal
-    function findCurrentUser() {
-        return ctx.users.find((user) => user.email === ctx.currentUser);
-    }
+    const currentUser = useFindCurrentUser()
 
     function initializeBalance() {
-        setBalance(findCurrentUser().balance)
+        setBalance(currentUser.balance)
         return balance
     }
 
@@ -40,7 +35,7 @@ export function Withdraw() {
         }
 
         setBalance(balance - withdrawalNum);
-        findCurrentUser().balance -= withdrawalNum;
+        currentUser.balance -= withdrawalNum;
         setStatus('Withdrawal sucessful')
     }
 
