@@ -1,5 +1,5 @@
 // import { FindCurrentUser } from "./FindCurrentUser.js"
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
 // import InitializeBalance from "../initializeBalance";
 import useValidateAmounts from "../helpers/useValidateAmounts";
@@ -12,9 +12,6 @@ export function Deposit() {
 
 
     const validationResult = useValidateAmounts(deposit)
-
-
-
 
     //TODO: Extract into separate component as stretch goal
     function findCurrentUser() {
