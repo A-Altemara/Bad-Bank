@@ -22,9 +22,14 @@ export function CreateAccount() {
     // this shows the values in the console to check its working, revalidates the data and pushes the user into our context and hides our user and allows the user to add another.
     function handleCreate() {
         console.log(name, email, password);
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         if (!validate(name, 'Name')) return;
         if (!validate(email, 'Email')) return;
         if (!validate(password, 'Password')) return;
+        if (!emailRegex.test(email)) {
+            setStatus('Please enter a valid email address');
+            return;
+        }
         if (password.length < 8) {
             setStatus('Error: Password must be at least 8 characters')
             return;
