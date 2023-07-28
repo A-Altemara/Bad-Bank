@@ -36,6 +36,7 @@ export function CreateAccount() {
         }
 
         ctx.users.push({ name, email, password, balance: 100 });
+        setStatus('You have created your account')
         setShow(false);
     }
 
