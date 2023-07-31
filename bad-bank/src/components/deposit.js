@@ -1,7 +1,5 @@
-// import { FindCurrentUser } from "./FindCurrentUser.js"
 import { useContext, useState } from "react";
 import { UserContext, Card } from "./context";
-// import InitializeBalance from "../initializeBalance";
 import useValidateAmounts from "../helpers/useValidateAmounts";
 import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
 
