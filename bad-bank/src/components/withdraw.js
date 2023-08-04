@@ -36,6 +36,7 @@ export function Withdraw() {
 
         setBalance(balance - withdrawalNum);
         currentUser.balance -= withdrawalNum;
+        setWithdrawal('');
         setStatus('Withdrawal sucessful')
     }
 

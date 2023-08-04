@@ -2,6 +2,7 @@
 
 ## Road Map
 
+- Add Show/ Hide password toggle option
 - Move controls for depost and withdrawal buttons into context
 - Extract all context into separate folder
 - Use context to fetch and handle API calls

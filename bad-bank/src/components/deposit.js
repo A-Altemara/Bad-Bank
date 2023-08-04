@@ -33,6 +33,7 @@ export function Deposit() {
 
         setBalance(balance + depositNum);
         currentUser.balance += depositNum;
+        setDeposit('');
         setStatus('Deposit successful');
     }
 
