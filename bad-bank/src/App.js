@@ -15,7 +15,7 @@ function App() {
   return (
     <HashRouter basename="/">
       <NavBar />
-      <UserContext.Provider value={{ currentUser: null, users: [{ name: 'able', email: 'able@mit.edu', password: 'secret', balance: 100 }] }}>
+      <UserContext.Provider value={{ currentUser: null, users: [{ name: 'able', email: 'able@mit.edu', password: 'secret', balance: 100, role: "user" }, { name: 'admin', email: 'admin@mit.edu', password: 'secret', balance: 100, role: "admin" }] }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/CreateAccount/" element={<CreateAccount />} />

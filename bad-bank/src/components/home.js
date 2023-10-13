@@ -1,5 +1,5 @@
 import { Card } from "./context";
-import imageLarge from '../../src/pictures/marble-bank.png'
+import imageLarge from '../pictures/marble-bank.png'
 
 
 export function Home() {
