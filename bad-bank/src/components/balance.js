@@ -9,6 +9,24 @@ export function Balance() {
 
     const currentUser = useFindCurrentUser()
 
+    const baseUrl = 'http://localhost:27017';
+
+    function handle() {
+        const url = `${baseUrl}/`;
+        (async () => {
+            let res = await fetch(url);
+            console.log("baseUrl res: " + res)
+            // let balance = await res.json();
+            // console.log(balance);
+            // if (balance === null) {
+            //     props.setStatus('Email not found')
+            // } else {
+            //     props.setStatus(`Your new balance is: ${balance}`);
+            //     props.setShow(false);
+            // }
+        })();
+    }
+
     return (
         <Card
             bgcolor="primary"
@@ -23,6 +41,7 @@ export function Balance() {
                 <>
                     <h5>Please Login</h5>
                     <button type="submit" className="btn btn-light"><a href='#/login/' >Click to Go to Login Page</a></button>
+                    {handle()}
                 </>
             )}
         />

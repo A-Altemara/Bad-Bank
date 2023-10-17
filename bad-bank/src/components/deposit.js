@@ -36,6 +36,27 @@ export function Deposit() {
         setDeposit('');
         setStatus('Deposit successful');
     }
+    const baseUrl = 'https://corsproxy.io/?http://localhost:27017';
+
+    function handle() {
+        const url = `/account/balance/a@a.com`;
+        (async () => {
+            let res = await fetch(url);
+            console.log("baseUrl res: " + res)
+
+            //   let balance = await res.json();
+            //   console.log(balance);
+            //   if (balance === null) {
+            //     props.setStatus('Email not found')
+            //   } else {
+            //     setBalance(balance);
+            //     props.setStatus(`Your balance is: ${balance}`);
+            //     props.setShow(false);
+            //   }
+        })();
+    }
+
+
 
     return (
         <Card
@@ -54,6 +75,7 @@ export function Deposit() {
                 <>
                     <h5>Please Login</h5>
                     <button type="submit" className="btn btn-light"><a href='#/login/' >Click to Go to Login Page</a></button>
+                    {handle()}
                 </>
             )}
         />
