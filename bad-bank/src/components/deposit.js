@@ -42,10 +42,10 @@ export function Deposit() {
         const url = `/account/balance/a@a.com`;
         (async () => {
             let res = await fetch(url);
-            console.log("baseUrl res: " + res)
+            // console.log("baseUrl res: " + res)
 
-            //   let balance = await res.json();
-            //   console.log(balance);
+            let balance = await res;
+            console.log(balance);
             //   if (balance === null) {
             //     props.setStatus('Email not found')
             //   } else {

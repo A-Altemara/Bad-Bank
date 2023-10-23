@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext, Card } from "./context";
 import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
 
@@ -9,22 +9,37 @@ export function Balance() {
 
     const currentUser = useFindCurrentUser()
 
-    const baseUrl = 'http://localhost:27017';
+    const baseUrl = 'http://localhost:4500';
+
 
     function handle() {
-        const url = `${baseUrl}/`;
-        (async () => {
-            let res = await fetch(url);
-            console.log("baseUrl res: " + res)
-            // let balance = await res.json();
-            // console.log(balance);
-            // if (balance === null) {
-            //     props.setStatus('Email not found')
-            // } else {
-            //     props.setStatus(`Your new balance is: ${balance}`);
-            //     props.setShow(false);
-            // }
-        })();
+        // const url = `${baseUrl}/account/balance/a@a.com`;
+        fetch(`${baseUrl}/account/balance/a@a.com`)
+            .then(async (res) => {
+                const balance = await res.json();
+
+                setStatus(`Your balance is: ${balance}`)
+
+                if (balance === null) {
+                    setStatus('Email not found')
+                } else {
+                    setStatus(`Your new balance is: ${balance}`);
+                    // setShow(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+
+            })
+
+        // (async () => {
+        //     let res = await fetch(url);
+        //     console.log('res', res)
+        //     // console.log("baseUrl res: " + res)
+        //     let balance = await res;
+        //     console.log(balance);
+        //     
+        // })();
     }
 
     return (
@@ -41,7 +56,7 @@ export function Balance() {
                 <>
                     <h5>Please Login</h5>
                     <button type="submit" className="btn btn-light"><a href='#/login/' >Click to Go to Login Page</a></button>
-                    {handle()}
+
                 </>
             )}
         />

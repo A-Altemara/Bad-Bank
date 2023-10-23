@@ -3,16 +3,7 @@ var app = express();
 var cors = require('cors');
 var dal = require('./dal.js');
 
-app.use(express.static('public'));
-// const corsOptions = {
-//     origin: "http://localhost:3000"
-// };
-
-// /**
-//  * This configures all of the following routes to use the cors middleware
-//  * with the options defined above.
-//  */
-// app.use(cors(corsOptions)
+// app.use(express.static('src/components'));
 app.use(cors());
 
 app.all('/', function (req, res, next) {
@@ -20,39 +11,14 @@ app.all('/', function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next()
 });
-app.options("http://localhost:3000", cors());
 
-const allowedOrigins = [
-    'capacitor://localhost',
-    'ionic://localhost',
-    'http://localhost',
-    'http://localhost:3000',
-    'http://localhost:27017',
-];
-
-// Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
-const corsOptions = {
-    origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Origin not allowed by CORS'));
-        }
-    },
-};
-
-// Enable preflight requests for all routes
-app.options('*', cors(corsOptions));
-
-app.get('/', cors(corsOptions), (req, res, next) => {
-    res.json({ message: 'This route is CORS-enabled for an allowed origin.' });
+// for hello world test
+app.get('/hello', function (req, res) {
+    res.send('Hello World!');
 });
 
-
-
 // for data abstraction layer
-
-// create a new user account
+// create a new account
 app.get('/account/create/:name/:email/:password', function (req, res) {
     // else create user
     dal.create(req.params.name, req.params.email, req.params.password).
@@ -91,17 +57,14 @@ app.get('/account/withdraw/:email/:amount', function (req, res) {
 
 // get the balance for an account
 app.get('/account/balance/:email', function (req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    res.setHeader("Access-Control-Allow-Methods", "POST");
-    dal.balance(req.params.email).
-        then((balance) => {
+    dal.balance(req.params.email)
+        .then((balance) => {
             console.log("Balance: " + balance);
             res.send(balance);
         });
 });
 
-// for data abstraction layer
+// for all data in the database
 app.get('/account/all', function (req, res) {
     dal.all().
         then((docs) => {
@@ -110,7 +73,14 @@ app.get('/account/all', function (req, res) {
         })
 });
 
-const port = 3000;
+const port = 4500;
 app.listen(port);
 console.log('Running on port: ' + port);
+
+
+
+
+// const port = 3000;
+// app.listen(port);
+// console.log('Running on port: ' + port);
 

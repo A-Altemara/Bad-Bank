@@ -77,6 +77,24 @@ async function connectToMongo() {
 // Call the connectToMongo function to establish the connection
 connectToMongo();
 
+async function test() {
+    try {
+        // Wait for the MongoDB connection to be established
+        await connectToMongo();
+
+        if (!db) {
+            throw new Error('MongoDB connection is not established.');
+        }
+        console.log("connected to test")
+    } catch (err) {
+        console.error(err);
+        throw err; // Propagate the error
+    }
+
+
+
+}
+
 // Function to create a user document in the 'users' collection
 async function create(name, email, password) {
     try {
