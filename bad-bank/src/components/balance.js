@@ -12,9 +12,9 @@ export function Balance() {
     const baseUrl = 'http://localhost:4500';
 
 
-    function handle() {
+    function handle(email) {
         // const url = `${baseUrl}/account/balance/a@a.com`;
-        fetch(`${baseUrl}/account/balance/a@a.com`)
+        fetch(`${baseUrl}/account/balance/${email}`)
             .then(async (res) => {
                 const balance = await res.json();
 
@@ -41,6 +41,7 @@ export function Balance() {
         //     
         // })();
     }
+    if (ctx.currentUser) { handle(ctx.currentUser.email) }
 
     return (
         <Card
