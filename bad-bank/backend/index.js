@@ -66,9 +66,9 @@ app.get('/account/balance/:email', function (req, res) {
 
 // for all data in the database
 app.get('/account/all', function (req, res) {
-    dal.all().
-        then((docs) => {
-            console.log(docs);
+    dal.all()
+        .then((docs) => {
+            console.log('docs in index', docs);
             res.send(docs);
         })
 });

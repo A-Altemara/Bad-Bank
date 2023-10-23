@@ -44,15 +44,6 @@ export function Deposit() {
             let res = await fetch(url);
             // console.log("baseUrl res: " + res)
 
-            let balance = await res;
-            console.log(balance);
-            //   if (balance === null) {
-            //     props.setStatus('Email not found')
-            //   } else {
-            //     setBalance(balance);
-            //     props.setStatus(`Your balance is: ${balance}`);
-            //     props.setShow(false);
-            //   }
         })();
     }
 

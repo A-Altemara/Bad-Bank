@@ -10,6 +10,17 @@ MIT XPRO Full Stack Project. Demostrates the skills learned over the course and 
 - npm install
 - npm start
 
+## How to run
+
+### Front End
+
+- Root folder `NPM Start`
+
+### Backend
+
+- Mongo Database run from Backend folder with command `mongosh`
+- Express Server run from Backend folder different terminal `node index.js`
+
 ## Screen Shots
 
 ### Tech Stack

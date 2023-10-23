@@ -24,10 +24,10 @@ export function NavBar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             {/* TODO: make visible when isLoggedIn = true is not visible */}
-            {isLoggedIn ? (<></>) : (
-              <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === "/CreateAccount" ? "active" : ''}`} aria-current="page" to="/CreateAccount" data-toggle="tooltip" title="Click here to create a new account login.">Create Account</Link>
-              </li>)}
+
+            <li className="nav-item">
+              <Link className={`nav-link ${location.pathname === "/CreateAccount" ? "active" : ''}`} aria-current="page" to="/CreateAccount" data-toggle="tooltip" title="Click here to create a new account login.">Create Account</Link>
+            </li>
             {/* TODO: make visible when isLoggedIn = true shows as logout */}
             <li className="nav-item">
               <Link className={`nav-link ${location.pathname === "/login" ? "active" : ''}`} aria-current="page" to="/login" data-toggle="tooltip" title="Click here to login to your account.">Login</Link>
@@ -45,10 +45,10 @@ export function NavBar() {
               <Link className={`nav-link ${location.pathname === "/balance" ? "active" : ''}`} aria-current="page" to="/balance" data-toggle="tooltip" title="Click here to check your account balance.">Balance</Link>
             </li>
             {/* TODO update so when isLoggedIN and userRole = admin this is visable */}
-            {isLoggedIn && userRole === 'admin' ? (
-              <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === "/alldata" ? "active" : ''}`} aria-current="page" to="/alldata" data-toggle="tooltip" title="Click here to see the data from all users, Admins only (⌐■_■)">AllData</Link>
-              </li>) : (<></>)}
+
+            <li className="nav-item">
+              <Link className={`nav-link ${location.pathname === "/alldata" ? "active" : ''}`} aria-current="page" to="/alldata" data-toggle="tooltip" title="Click here to see the data from all users, Admins only (⌐■_■)">AllData</Link>
+            </li>
           </ul>
         </div>
       </nav>
