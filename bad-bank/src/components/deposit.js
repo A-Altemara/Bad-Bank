@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card } from "./shared/Card";
 import useValidateAmounts from "../utilities/useValidateAmounts";
-import { useFindCurrentUser } from "../utilities/useFindCurrentUser";
 
 export function Deposit() {
     // Josh's version of what this file should do:
@@ -23,20 +22,8 @@ export function Deposit() {
 
 
     const validationResult = useValidateAmounts(deposit)
-    const currentUser = useFindCurrentUser()
 
-    //TODO: Extract into separat component as stretch goal
-    function initializeBalance() {
-        if (!currentUser) return
-        console.log('initializeBalance', currentUser)
-        setBalance(currentUser.balance)
-        // return balance
-    }
-
-    useEffect(() => {
-        initializeBalance()
-    })
-
+    const testUser = 'a@a.com'
     const baseUrl = 'http://localhost:4500';
 
     function handleDeposit(email, amount) {
@@ -48,7 +35,7 @@ export function Deposit() {
             return;
         }
 
-        fetch(`${baseUrl}/account/deposit/a@a.com/${Number(deposit)}`)
+        fetch(`${baseUrl}/account/deposit/${testUser}/${Number(deposit)}`)
             .then(async (res) => {
                 const newBalance = await res.json();
                 console.log('deposit', newBalance)

@@ -9,7 +9,7 @@ export function Balance() {
     const testUser = 'a@a.com'
     const baseUrl = 'http://localhost:4500';
 
-    const url = `${baseUrl}/account/balance/a@a.com`;
+    const url = `${baseUrl}/account/balance/${testUser}`;
 
     function handle(email) {
         fetch(url)
