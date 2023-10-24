@@ -1,4 +1,4 @@
-import { Card } from "./context";
+import { Card } from "./shared/Card";
 import imageLarge from '../pictures/marble-bank.png'
 
 

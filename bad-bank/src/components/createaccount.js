@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
-import { UserContext, Card } from "./context";
+import { UserContext } from "./context";
+import { Card } from "./shared/Card";
 
 export function CreateAccount() {
     const [show, setShow] = useState(true);

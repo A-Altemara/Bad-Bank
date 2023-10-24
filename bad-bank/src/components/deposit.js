@@ -1,10 +1,22 @@
-import { useContext, useState } from "react";
-import { UserContext, Card } from "./context";
-import useValidateAmounts from "../helpers/useValidateAmounts";
-import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
+import { useState, useEffect } from "react";
+import { Card } from "./shared/Card";
+import useValidateAmounts from "../utilities/useValidateAmounts";
+import { useFindCurrentUser } from "../utilities/useFindCurrentUser";
 
 export function Deposit() {
-    const ctx = useContext(UserContext);
+    // Josh's version of what this file should do:
+    // note: balance, deposit & withdraw validation all happen in app.js, status validation
+    // import setBalance from App.js
+
+    // const [status, setStatus] = useState('');
+    // function handler(depositAmount){
+    // depositMoney(depositAmount)
+    // handle setStatus() & validation
+    // }
+    // return (all the stuff)
+
+
+    // End Josh's version
     const [status, setStatus] = useState('');
     const [deposit, setDeposit] = useState('');
     const [balance, setBalance] = useState(null);
@@ -15,12 +27,19 @@ export function Deposit() {
 
     //TODO: Extract into separat component as stretch goal
     function initializeBalance() {
+        if (!currentUser) return
+        console.log('initializeBalance', currentUser)
         setBalance(currentUser.balance)
-        return balance
+        // return balance
     }
 
+    useEffect(() => {
+        initializeBalance()
+    })
 
-    function handleDeposit() {
+    const baseUrl = 'http://localhost:4500';
+
+    function handleDeposit(email, amount) {
 
         //TODO handle deposit button inactive
         if (validationResult) {
@@ -29,46 +48,64 @@ export function Deposit() {
             return;
         }
 
-        const depositNum = Number(deposit);
+        // amount = Number(deposit);
 
-        setBalance(balance + depositNum);
-        currentUser.balance += depositNum;
+        // setBalance(balance + depositNum);
+        // currentUser.balance += depositNum;
+
+
+        fetch(`${baseUrl}/account/deposit/a@a.com/${Number(deposit)}`)
+            .then(async (res) => {
+                const newBalance = await res.json();
+                console.log('deposit', newBalance)
+                setBalance(newBalance)
+                // setStatus(`Your deposit is: ${deposit}`)
+
+                if (deposit === null) {
+                    setStatus('Balance error, Please contact support')
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+
+            })
+
         setDeposit('');
         setStatus('Deposit successful');
     }
-    const baseUrl = 'https://corsproxy.io/?http://localhost:27017';
-
-    function handle() {
-        const url = `/account/balance/a@a.com`;
-        (async () => {
-            let res = await fetch(url);
-            // console.log("baseUrl res: " + res)
-
-        })();
-    }
-
-
 
     return (
         <Card
             bgcolor="primary"
             header='Deposit'
             status={status}
-            body={ctx.currentUser ? (
+            body=
+            {
                 <>
-                    Current Account Balance {balance ? balance : initializeBalance()} <br />
-                    Deposit Amount<br />
-                    <input type="input" className="form-control" id="deposit" placeholder="Enter Amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)} /><br />
-                    {/* TODO remove diable once added to context */}
-                    <button type="submit" className="btn btn-light" onClick={handleDeposit} disabled={deposit === ''}>Deposit</button>
+                    Current Account Balance {balance}
+                    <br />
+                    Deposit Amount
+                    <br />
+                    <input
+                        type="input"
+                        className="form-control"
+                        id="deposit"
+                        placeholder="Enter Amount"
+                        value={deposit}
+                        onChange={e => setDeposit(e.currentTarget.value)}
+                    />
+                    <br />
+                    <button
+                        type="submit"
+                        className="btn btn-light"
+                        onClick={handleDeposit}
+                        disabled={deposit === ''}
+                    >
+                        Deposit
+                    </button>
                 </>
-            ) : (
-                <>
-                    <h5>Please Login</h5>
-                    <button type="submit" className="btn btn-light"><a href='#/login/' >Click to Go to Login Page</a></button>
-                    {handle()}
-                </>
-            )}
+
+            }
         />
     )
 }

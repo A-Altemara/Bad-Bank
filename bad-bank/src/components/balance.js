@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext, Card } from "./context";
-import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
+import { UserContext } from "./context";
+import { Card } from "./shared/Card";
+import { useFindCurrentUser } from "../utilities/useFindCurrentUser";
 
 
 export function Balance() {
@@ -21,10 +22,7 @@ export function Balance() {
                 setStatus(`Your balance is: ${balance}`)
 
                 if (balance === null) {
-                    setStatus('Email not found')
-                } else {
-                    setStatus(`Your new balance is: ${balance}`);
-                    // setShow(false);
+                    setStatus('Balance error, Please contact support')
                 }
             })
             .catch((err) => {

@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
-import { UserContext, Card } from "./context";
-import useValidateAmounts from "../helpers/useValidateAmounts";
-import { useFindCurrentUser } from "../helpers/useFindCurrentUser";
+import { UserContext } from "./context";
+import { Card } from "./shared/Card";
+import useValidateAmounts from "../utilities/useValidateAmounts";
+import { useFindCurrentUser } from "../utilities/useFindCurrentUser";
 
 
 export function Withdraw() {

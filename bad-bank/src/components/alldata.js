@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext, Card } from "./context";
+import { UserContext } from "./context";
+import { Card } from "./shared/Card";
+
 
 export function AllData() {
     const [data, setData] = useState('');
 
+    const baseUrl = 'http://localhost:4500';
 
     function getStuff() {
-        fetch('http://localhost:4500/account/all')
+        fetch(`${baseUrl}/account/all`)
             .then(async (res) => {
 
                 const data = await res.json();
