@@ -48,12 +48,6 @@ export function Deposit() {
             return;
         }
 
-        // amount = Number(deposit);
-
-        // setBalance(balance + depositNum);
-        // currentUser.balance += depositNum;
-
-
         fetch(`${baseUrl}/account/deposit/a@a.com/${Number(deposit)}`)
             .then(async (res) => {
                 const newBalance = await res.json();

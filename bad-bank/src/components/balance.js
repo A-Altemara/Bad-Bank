@@ -1,23 +1,20 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "./context";
+import { useState } from "react";
 import { Card } from "./shared/Card";
-import { useFindCurrentUser } from "../utilities/useFindCurrentUser";
 
 
 export function Balance() {
-    const ctx = useContext(UserContext);
     const [status, setStatus] = useState('');
+    const [balance, setBalance] = useState(null);
 
-    const currentUser = useFindCurrentUser()
-
+    const testUser = 'a@a.com'
     const baseUrl = 'http://localhost:4500';
 
+    const url = `${baseUrl}/account/balance/a@a.com`;
 
     function handle(email) {
-        // const url = `${baseUrl}/account/balance/a@a.com`;
-        fetch(`${baseUrl}/account/balance/${email}`)
+        fetch(url)
             .then(async (res) => {
-                const balance = await res.json();
+                setBalance(await res.json());
 
                 setStatus(`Your balance is: ${balance}`)
 
@@ -29,35 +26,20 @@ export function Balance() {
                 console.log(err);
 
             })
-
-        // (async () => {
-        //     let res = await fetch(url);
-        //     console.log('res', res)
-        //     // console.log("baseUrl res: " + res)
-        //     let balance = await res;
-        //     console.log(balance);
-        //     
-        // })();
     }
-    if (ctx.currentUser) { handle(ctx.currentUser.email) }
+    handle(testUser)
 
     return (
         <Card
             bgcolor="primary"
             header='Balance'
             status={status}
-            body={ctx.currentUser ? (
+            body={
                 <>
-                    Your Balance is {currentUser.balance}
+                    Your Balance is {balance}
 
                 </>
-            ) : (
-                <>
-                    <h5>Please Login</h5>
-                    <button type="submit" className="btn btn-light"><a href='#/login/' >Click to Go to Login Page</a></button>
-
-                </>
-            )}
+            }
         />
     )
 }
