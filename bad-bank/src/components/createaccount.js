@@ -2,6 +2,11 @@ import { useContext, useState } from "react";
 import { UserContext } from "./context";
 import { Card } from "./shared/Card";
 
+const testName = 'a1'
+const testEmail = 'a@a.com1'
+const testPassword = 'a1'
+const baseUrl = 'http://localhost:4500';
+
 export function CreateAccount() {
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState('');
@@ -37,6 +42,15 @@ export function CreateAccount() {
         }
 
         ctx.users.push({ name, email, password, balance: 100 });
+
+
+        console.log(name, email, password);
+        const url = `${baseUrl}/account/create/${name}/${email}/${password}`;
+        (async () => {
+            var res = await fetch(url);
+            var data = await res.json();
+            console.log(data);
+        })();
         setStatus('You have created your account')
         setShow(false);
     }
@@ -51,23 +65,61 @@ export function CreateAccount() {
 
     return (
         <Card
-            bgcolor="primary"
+            bgcolor="info"
             header='Create Account'
             status={status}
             body={show ? (
                 <>
-                    Name<br />
-                    <input type="input" className="form-control" id="name" placeholder="Enter Name" value={name} onChange={e => setName(e.currentTarget.value)} /><br />
-                    Email address<br />
-                    <input type="input" className="form-control" id="email" placeholder="Enter Email" value={email} onChange={e => setEmail(e.currentTarget.value)} /><br />
-                    Password<br />
-                    <input type="password" className="form-control" id="password" placeholder="Enter Password" value={password} onChange={e => setPassword(e.currentTarget.value)} /><br />
-                    <button type="submit" className="btn btn-light" onClick={handleCreate} disabled={name + email + password === ''}>Create Account</button>
+                    Name
+                    <br />
+                    <input
+                        type="input"
+                        className="form-control"
+                        id="name"
+                        placeholder="Enter Name"
+                        value={name}
+                        onChange={e => setName(e.currentTarget.value)}
+                    />
+                    <br />
+                    Email address
+                    <br />
+                    <input
+                        type="input" className="form-control"
+                        id="email"
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={e => setEmail(e.currentTarget.value)}
+                    />
+                    <br />
+                    Password
+                    <br />
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        placeholder="Enter Password"
+                        value={password}
+                        onChange={e => setPassword(e.currentTarget.value)}
+                    />
+                    <br />
+                    <button
+                        type="submit"
+                        className="btn btn-light"
+                        onClick={handleCreate}
+                        disabled={name + email + password === ''}>
+                        Create Account
+                    </button>
                 </>
             ) : (
                 <>
                     <h5>Success</h5>
-                    <button type="submit" className="btn btn-light" onClick={clearForm} >Add Another Account</button>
+                    <button
+                        type="submit"
+                        className="btn btn-light"
+                        onClick={clearForm}
+                    >
+                        Add Another Account
+                    </button>
 
                 </>
             )}

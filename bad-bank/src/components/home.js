@@ -11,7 +11,7 @@ export function Home() {
     return (
         <>
             <Card style={cardStyle}
-                bgcolor="primary"
+                bgcolor="info"
                 txtcolor="white"
                 header="BadBank™"
                 title="Welcome to your trusted banking intitiution"

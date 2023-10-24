@@ -52,7 +52,7 @@ export function Login() {
 
     return (
         <Card
-            bgcolor="primary"
+            bgcolor="info"
             title="Login"
             status={status}
             body={!loggedIn ? (

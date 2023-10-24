@@ -1,6 +1,6 @@
 .active {
-	color: white !important;
-	font-weight: 700 !important;
+	color: white;
+	font-weight: 700;
 }
 
 body {
@@ -8,8 +8,8 @@ body {
 }
 
 nav {
-	background-color: rgb(17, 17, 94) !important;
-	color: white !important;
+	background-color: rgb(17, 17, 94);
+	color: white;
 }
 
 .card-body {

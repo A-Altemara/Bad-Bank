@@ -1,60 +1,3 @@
-// const MongoClient = require('mongodb').MongoClient;
-// const url = 'mongodb://localhost:27017';
-// let db = null;
-
-// async function connectToMongo() {
-//     const client = new MongoClient(url, { monitorCommands: true });
-//     try {
-//         // Connect to MongoDB using the client
-//         await client.connect();
-
-//         // Connect to the 'myproject' database
-//         db = client.db('myproject');
-//     } catch (err) {
-//         console.error('Error connecting to MongoDB:', err);
-//     }
-// }
-
-// // Call the connectToMongo function to establish the connection
-// connectToMongo();
-
-// function create(name, email, password) {
-//     connectToMongo();
-//     return new Promise((resolve, reject) => {
-//         console.log(`db == null: ${db == null}`)
-//         const collection = db.collection('users');
-//         const doc = { name, email, password, balance: 0 };
-//         collection.insertOne(doc, { w: 1 }, function (err, result) {
-//             if (err) {
-//                 reject(err);
-//             } else {
-//                 resolve(doc);
-//             }
-//         })
-//     })
-// }
-
-// // all users
-// function all() {
-//     connectToMongo();
-//     return new Promise((resolve, reject) => {
-//         console.log("connected to all")
-//         const collection = db
-//             .collection('users')
-//             .find()
-//             .toArray(function (err, docs) {
-//                 if (err) {
-//                     reject(err);
-//                 } else {
-//                     resolve(docs);
-//                 }
-//             })
-//     })
-// }
-
-// module.exports = { create, all };
-
-
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 let db = null;
@@ -90,9 +33,6 @@ async function test() {
         console.error(err);
         throw err; // Propagate the error
     }
-
-
-
 }
 
 // Function to create a user document in the 'users' collection

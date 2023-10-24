@@ -5,7 +5,7 @@ export function Card(props) {
         return 'card mb-3 ' + bg + txt;
     }
     return (
-        <div className={classes()} style={{ maxWidth: "30%", margin: "auto", marginTop: "50px" }}>
+        <div className={classes()} style={{ maxWidth: "50%", margin: "auto", marginTop: "50px" }}>
             <div className="card-header">{props.header}</div>
             <div className="card-body">
                 {props.title && (<h5 className="card-title">{props.title}</h5>)}

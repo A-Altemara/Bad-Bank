@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card } from "./shared/Card";
 import useValidateAmounts from "../utilities/useValidateAmounts";
 
@@ -40,7 +40,6 @@ export function Deposit() {
                 const newBalance = await res.json();
                 console.log('deposit', newBalance)
                 setBalance(newBalance)
-                // setStatus(`Your deposit is: ${deposit}`)
 
                 if (deposit === null) {
                     setStatus('Balance error, Please contact support')
@@ -57,7 +56,7 @@ export function Deposit() {
 
     return (
         <Card
-            bgcolor="primary"
+            bgcolor="info"
             header='Deposit'
             status={status}
             body=

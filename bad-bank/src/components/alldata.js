@@ -38,7 +38,7 @@ export function AllData() {
     if (data !== '')
         return (
             <Card
-                bgcolor="primary"
+                bgcolor="secondary"
                 header='All Data'
                 body={
                     <>
