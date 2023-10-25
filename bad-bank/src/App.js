@@ -10,9 +10,15 @@ import { Deposit } from './components/deposit';
 import { Withdraw } from './components/withdraw';
 import { Balance } from './components/balance';
 import { AllData } from './components/alldata';
+import { useState } from 'react';
 
 function App() {
   const baseUrl = 'http://localhost:4500';
+  const testUser = 'a@a.com'
+
+  const [status, setStatus] = useState('');
+  const [amount, setDeposit] = useState('');
+  const [balance, setBalance] = useState(null);
 
   // remove context for simplicity bc few components and no/minimal nesting. 
   // Extra, extra, extra Stretch goal: add context.
@@ -40,6 +46,29 @@ function App() {
   //  validate
   //  setBalance
 
+  let adjustMoney = (amount) => {
+
+    fetch(`${baseUrl}/account/deposit/${testUser}/${Number(amount)}`)
+      .then(async (res) => {
+        const newBalance = await res.json();
+        console.log('deposit', newBalance)
+        setBalance(newBalance)
+
+        if (amount === null) {
+          setStatus('Balance error, Please contact support')
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+
+      })
+    if (balance != typeof Number) {
+      setStatus('Balance error, Please contact support')
+      return status
+    }
+    return (balance, status)
+  };
+
 
   return (
     <HashRouter basename="/">
@@ -50,14 +79,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/CreateAccount/" element={<CreateAccount />} />
           <Route path="/login/" element={<Login />} />
-          {/* should look like: 
-            <Route 
-              path="/deposit/" 
-              element={<Deposit balance={balance} setBalance={setBalance} />} 
-            /> 
-          */}
+
+          <Route
+            path="/deposit/"
+            element={<Deposit balance={balance} adjustMoney={adjustMoney} />}
+          />
+
           {/* depost, withdraw & balance are only accessible if logged in. if user, render these. */}
-          <Route path="/deposit/" element={<Deposit />} />
+          {/* <Route path="/deposit/" element={<Deposit />} /> */}
           <Route path="/withdraw/" element={<Withdraw />} />
           <Route path="/balance/" element={<Balance />} />
           {/* only accessible if admin. if admin, render here */}
