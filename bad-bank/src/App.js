@@ -84,10 +84,11 @@ function App() {
             path="/deposit/"
             element={<Deposit balance={balance} adjustMoney={adjustMoney} />}
           />
-
           {/* depost, withdraw & balance are only accessible if logged in. if user, render these. */}
-          {/* <Route path="/deposit/" element={<Deposit />} /> */}
-          <Route path="/withdraw/" element={<Withdraw />} />
+          <Route
+            path="/withdraw/"
+            element={<Withdraw balance={balance} adjustMoney={adjustMoney} />}
+          />
           <Route path="/balance/" element={<Balance />} />
           {/* only accessible if admin. if admin, render here */}
           <Route path="/alldata/" element={<AllData />} />

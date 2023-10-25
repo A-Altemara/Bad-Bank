@@ -2,20 +2,16 @@ import { useState } from "react";
 import { Card } from "./shared/Card";
 import useValidateAmounts from "../utilities/useValidateAmounts";
 
-const testUser = 'a@a.com'
-export function Withdraw() {
+export function Withdraw({ adjustMoney, balance }) {
     const [status, setStatus] = useState('');
-    const [withdrawal, setWithdrawal] = useState('');
-    const [balance, setBalance] = useState(null);
+    const [withdrawalAmount, setWithdrawalAmount] = useState('');
 
-    const validationResult = useValidateAmounts(withdrawal)
-
-    const baseUrl = 'http://localhost:4500';
+    const validationError = useValidateAmounts(withdrawalAmount)
 
     function handleWithdrawal() {
 
-        if (validationResult) {
-            setStatus(`Error Withdrawal ${validationResult}`);
+        if (validationError) {
+            setStatus(`Error Withdrawal ${validationError}`);
             console.log('validation result exists in withdrawl.js')
             return;
         }
@@ -26,22 +22,9 @@ export function Withdraw() {
         //     return;
         // }
 
-        fetch(`${baseUrl}/account/withdraw/${testUser}/${Number(withdrawal)}`)
-            .then(async (res) => {
-                const newBalance = await res.json();
-                console.log('withdrawal', newBalance)
-                setBalance(newBalance)
+        adjustMoney(-withdrawalAmount)
 
-                if (withdrawal === null) {
-                    setStatus('Balance error, Please contact support')
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-
-            })
-
-        setWithdrawal('');
+        setWithdrawalAmount('');
         setStatus('Withdrawal sucessful')
     }
 
@@ -59,15 +42,15 @@ export function Withdraw() {
                         className="form-control"
                         id=""
                         placeholder="Enter Amount"
-                        value={withdrawal}
-                        onChange={e => setWithdrawal(e.currentTarget.value)}
+                        value={withdrawalAmount}
+                        onChange={e => setWithdrawalAmount(e.currentTarget.value)}
                     />
                     <br />
                     <button
                         type="submit"
                         className="btn btn-light"
                         onClick={handleWithdrawal}
-                        disabled={withdrawal === ''}
+                        disabled={withdrawalAmount === ''}
                     >
                         Withdraw
                     </button>

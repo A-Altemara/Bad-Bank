@@ -5,11 +5,11 @@ import useValidateAmounts from "../utilities/useValidateAmounts";
 export function Deposit({ adjustMoney, balance }) {
 
     const [statusMessage, setStatusMesssage] = useState('');
-    const [depositField, setDepositField] = useState('');
+    const [depositAmount, setDepositAmount] = useState('');
 
-    const validationError = useValidateAmounts(depositField)
+    const validationError = useValidateAmounts(depositAmount)
 
-    function handleDeposit(amount) {
+    function handleDeposit() {
 
         if (validationError) {
             setStatusMesssage(`Error Deposit ${validationError}`);
@@ -17,13 +17,11 @@ export function Deposit({ adjustMoney, balance }) {
             return;
         }
 
-        adjustMoney(amount)
+        adjustMoney(depositAmount)
 
-        // TODO find a nicer way to do this
-        setTimeout(() => {
-            setDepositField('');
-            setStatusMesssage('Deposit successful');
-        }, 3000);
+        setDepositAmount('');
+        setStatusMesssage('Deposit successful');
+
     }
 
     return (
@@ -43,15 +41,15 @@ export function Deposit({ adjustMoney, balance }) {
                         className="form-control"
                         id="deposit"
                         placeholder="Enter Amount"
-                        value={depositField}
-                        onChange={e => setDepositField(e.currentTarget.value)}
+                        value={depositAmount}
+                        onChange={e => setDepositAmount(e.currentTarget.value)}
                     />
                     <br />
                     <button
                         type="submit"
                         className="btn btn-light"
-                        onClick={() => handleDeposit(depositField)}
-                        disabled={depositField === ''}
+                        onClick={() => handleDeposit()}
+                        disabled={depositAmount === ''}
                     >
                         Deposit
                     </button>
