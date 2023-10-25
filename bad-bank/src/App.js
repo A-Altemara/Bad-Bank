@@ -17,7 +17,6 @@ function App() {
   const testUser = 'a@a.com'
 
   const [status, setStatus] = useState('');
-  const [amount, setDeposit] = useState('');
   const [balance, setBalance] = useState(null);
 
   // remove context for simplicity bc few components and no/minimal nesting. 
@@ -25,7 +24,6 @@ function App() {
   // data that needs to be used by multiple components:
   // useState
   // user
-  // balance
   // allData does not live here. It stays in allData component
 
 
@@ -35,19 +33,25 @@ function App() {
   // make fetch
   // initialeBalance
 
+  let getBalance = () => {
+    fetch(`${baseUrl}/account/balance/${testUser}`)
+      .then(async (res) => {
+        setBalance(await res.json());
 
-  // will be passed to withdraw/deposit components
-  // export function withdrawMoney
-  //  fetch
-  //  validate
-  //  setBalance
-  // export function depositMoney
-  //  fetch
-  //  validate
-  //  setBalance
+        setStatus(`Your balance is: ${balance}`)
+
+        if (balance === null) {
+          setStatus('Balance error, Please contact support')
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+
+      })
+  }
+
 
   let adjustMoney = (amount) => {
-
     fetch(`${baseUrl}/account/deposit/${testUser}/${Number(amount)}`)
       .then(async (res) => {
         const newBalance = await res.json();
@@ -89,7 +93,9 @@ function App() {
             path="/withdraw/"
             element={<Withdraw balance={balance} adjustMoney={adjustMoney} />}
           />
-          <Route path="/balance/" element={<Balance />} />
+          <Route
+            path="/balance/"
+            element={<Balance getBalance={getBalance} balance={balance} />} />
           {/* only accessible if admin. if admin, render here */}
           <Route path="/alldata/" element={<AllData />} />
         </Routes>
