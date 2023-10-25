@@ -28,7 +28,6 @@ export function Deposit() {
 
     function handleDeposit(email, amount) {
 
-        //TODO handle deposit button inactive
         if (validationResult) {
             setStatus(`Error Deposit ${validationResult}`);
             console.log('validation result exists in deposit.js')

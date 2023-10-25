@@ -4,11 +4,11 @@
 }
 
 body {
-	background-color: #212121;
+	background-color: #453c67;
 }
 
 nav {
-	background-color: rgb(17, 17, 94);
+	background-color: rgb#453c67 !important;
 	color: white;
 }
 
