@@ -13,25 +13,16 @@ export function AllData() {
             .then(async (res) => {
 
                 const data = await res.json();
-                // console.log('data in useEffect', data)
-                console.log('data', data)
                 return setData(data);
-
-                // (data => {
-                //     console.log("data: " + data);
-                //     // setData(JSON.stringify(data));
-                // });
             })
     }
 
     useEffect(() => {
-        //fetch all accounts from API
         if (data === '') { getStuff() }
 
 
     }, [data]);
 
-    console.log('data outside useEffect', data)
     // const ctx = useContext(UserContext);
     // TODO: move the fetch to context, so context holds user data, and the action pull user data.
 

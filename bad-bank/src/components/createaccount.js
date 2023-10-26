@@ -1,10 +1,6 @@
-import { useContext, useState } from "react";
-import { UserContext } from "./context";
+import { useState } from "react";
 import { Card } from "./shared/Card";
 
-const testName = 'a1'
-const testEmail = 'a@a.com1'
-const testPassword = 'a1'
 const baseUrl = 'http://localhost:4500';
 
 export function CreateAccount() {
@@ -13,9 +9,7 @@ export function CreateAccount() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const ctx = useContext(UserContext);
 
-    // only validates that there is something in the field should be expanded to actually validate the fields.
     function validate(field, label) {
         if (!field) {
             setStatus('Error: ' + label + ' must not be blank');
@@ -25,9 +19,8 @@ export function CreateAccount() {
         return true;
     }
 
-    // this shows the values in the console to check its working, revalidates the data and pushes the user into our context and hides our user and allows the user to add another.
+    // this validates the data and pushes the user into our datbase and hides our user and allows the user to add another.
     function handleCreate() {
-        console.log(name, email, password);
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         if (!validate(name, 'Name')) return;
         if (!validate(email, 'Email')) return;
@@ -41,15 +34,11 @@ export function CreateAccount() {
             return;
         }
 
-        ctx.users.push({ name, email, password, balance: 100 });
-
-
-        console.log(name, email, password);
         const url = `${baseUrl}/account/create/${name}/${email}/${password}`;
         (async () => {
             var res = await fetch(url);
-            var data = await res.json();
-            console.log(data);
+            // var data = await res.json();
+            // console.log(data);
         })();
         setStatus('You have created your account')
         setShow(false);

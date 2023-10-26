@@ -7,7 +7,6 @@ export function NavBar() {
   const location = useLocation();
 
   const ctx = useContext(UserContext);
-  console.log(ctx)
 
   const isLoggedIn = (ctx?.currentUser ?? null) !== null;
   const userRole = ctx?.currentUser?.role ?? null;

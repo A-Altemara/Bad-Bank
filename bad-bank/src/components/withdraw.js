@@ -16,11 +16,10 @@ export function Withdraw({ adjustMoney, balance }) {
             return;
         }
 
-        // TODO: Reinstate OverDraft notification
-        // if (withdrawalNum > balance) {
-        //     setStatus('Insufficient funds.');
-        //     return;
-        // }
+        if (withdrawalAmount > balance) {
+            setStatus('Insufficient funds.');
+            return;
+        }
 
         adjustMoney(-withdrawalAmount)
 
