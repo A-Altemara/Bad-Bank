@@ -1,10 +1,6 @@
-import { useState } from "react";
 import { Card } from "./shared/Card";
 
-
-export function Balance({ getBalance, balance }) {
-
-    getBalance()
+export function Balance({ balance }) {
 
     // strecth goal add trasaction history
     return (

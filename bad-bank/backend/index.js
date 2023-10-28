@@ -45,8 +45,8 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
 app.get('/account/login/:email/:password', function (req, res) {
     dal.login(req.params.email, req.params.password).
         then((user) => {
-            console.log("tada, user in backend response: ", user);
-            console.log(user ? "Login Succeeded" : "Login Failed");
+            // console.log("tada, user in backend response: ", user);
+            // console.log(user ? "Backend Login Succeeded" : "backend Login Failed");
             res.send(user);
         });
 });

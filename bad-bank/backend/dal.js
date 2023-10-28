@@ -55,7 +55,7 @@ async function create(name, email, password) {
     }
 }
 
-// function to login a user
+// Login a user
 async function login(email, password) {
     try {
         // Wait for the MongoDB connection to be established

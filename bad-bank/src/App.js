@@ -14,17 +14,17 @@ import { useState, useEffect } from 'react';
 
 function App() {
   const baseUrl = 'http://localhost:4500';
-  // const user = 'a@a.com'
 
   const [status, setStatus] = useState('');
-  const [balance, setBalance] = useState(0);
   // need userName, role, balance
   // const user = {
   // name: string,
   // role: string,
   // balance: number
   // }
-  const [user, setUser] = useState(null);
+
+  // ! balance is initialized temporarily to prevent user.balance from breaking routes using it. There is a better way. I think.
+  const [user, setUser] = useState({ balance: 0 });
 
   // Login a user 
   // this should be the landing page
@@ -42,9 +42,10 @@ function App() {
     fetch(`${baseUrl}/account/login/${email}/${password}`)
       .then(async (res) => {
         const tempUser = await res.json()
-        setUser(tempUser);
-        getBalance()
-        // route to homepage
+        console.log("tempUser", tempUser)
+        setUser(tempUser)
+
+        // Todo: route to homepage
       })
       .catch((err) => {
         console.log(err);
@@ -53,30 +54,30 @@ function App() {
   }
 
 
-  let getBalance = () => {
-    fetch(`${baseUrl}/account/balance/${user.email}`)
-      .then(async (res) => {
-        setBalance(await res.json());
+  // let getBalance = () => {
+  //   console.log("user from getBalance", user.email)
+  //   fetch(`${baseUrl}/account/balance/${user.email}`)
+  //     .then(async (res) => {
+  //       setBalance(await res.json());
 
-        setStatus(`Your balance is: ${balance}`)
+  //       setStatus(`Your balance is: ${balance}`)
 
-        if (balance === null) {
-          setStatus('Balance error, Please contact support')
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+  //       if (balance === null) {
+  //         setStatus('Balance error, Please contact support')
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
 
-      })
-  }
+  //     })
+  // }
 
 
   let adjustMoney = (amount) => {
     fetch(`${baseUrl}/account/deposit/${user.email}/${Number(amount)}`)
       .then(async (res) => {
         const newBalance = await res.json();
-        setBalance(newBalance)
-
+        setUser({ ...user, balance: newBalance })
         if (amount === null) {
           setStatus('Balance error, Please contact support')
         }
@@ -85,41 +86,42 @@ function App() {
         console.log(err);
 
       })
-    if (balance != typeof Number) {
+    if (user.balance != typeof Number) {
       setStatus('Balance error, Please contact support')
       return status
     }
-    return (balance, status)
+    return (user.balance, status)
   };
 
 
   return (
     <HashRouter basename="/">
       <NavBar />
-      {/* insteaad of context, we pass balance, user & setBalance as needed to components */}
-      <UserContext.Provider value={{ currentUser: null, users: [{ name: 'able', email: 'able@mit.edu', password: 'secret', balance: 100, role: "user" }, { name: 'admin', email: 'admin@mit.edu', password: 'secret', balance: 100, role: "admin" }] }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/CreateAccount/"
-            element={<CreateAccount />} />
-          <Route path="/login/" element={<Login initializeUser={initializeUser} />} />
-          <Route
-            path="/deposit/"
-            element={<Deposit balance={balance} adjustMoney={adjustMoney} />}
-          />
-          {/* depost, withdraw & balance are only accessible if logged in. if user, render these. */}
-          <Route
-            path="/withdraw/"
-            element={<Withdraw balance={balance} adjustMoney={adjustMoney} />}
-          />
-          <Route
-            path="/balance/"
-            element={<Balance getBalance={getBalance} balance={balance} />} />
-          {/* only accessible if admin. if admin, render here */}
-          <Route path="/alldata/" element={<AllData />} />
-        </Routes>
-      </UserContext.Provider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/CreateAccount/"
+          element={<CreateAccount />} />
+        <Route path="/login/" element={<Login initializeUser={initializeUser} />} />
+
+        {/* // Todo: These need the react router way of being limited by user existing */}
+        <Route
+          path="/deposit/"
+          element={<Deposit balance={user.balance} adjustMoney={adjustMoney} />}
+        />
+        <Route
+          path="/withdraw/"
+          element={<Withdraw balance={user.balance} adjustMoney={adjustMoney} />}
+        />
+        <Route
+          path="/balance/"
+          element={<Balance balance={user.balance} />} />
+        {/* // todo:  only accessible if admin. if admin, render here */}
+        <Route path="/alldata/" element={<AllData />} />
+
+
+
+      </Routes>
     </HashRouter>
   );
 }
