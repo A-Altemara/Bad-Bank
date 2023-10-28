@@ -34,6 +34,7 @@ export function CreateAccount() {
             return;
         }
 
+        // TODO: add Role field to form and set to 'user'
         const url = `${baseUrl}/account/create/${name}/${email}/${password}`;
         (async () => {
             var res = await fetch(url);

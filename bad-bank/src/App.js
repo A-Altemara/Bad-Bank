@@ -14,28 +14,47 @@ import { useState, useEffect } from 'react';
 
 function App() {
   const baseUrl = 'http://localhost:4500';
-  const testUser = 'a@a.com'
+  // const user = 'a@a.com'
 
   const [status, setStatus] = useState('');
-  const [show, setShow] = useState(true);
   const [balance, setBalance] = useState(0);
+  // need userName, role, balance
+  // const user = {
+  // name: string,
+  // role: string,
+  // balance: number
+  // }
+  const [user, setUser] = useState(null);
 
+  // Login a user 
+  // this should be the landing page
+  // form to fill with email and password
+  // if email and password match sends to router
+  // router should send back balance and user name and role
+  // if email and password do not match, send error message
 
-  // Extra, extra, extra Stretch goal: add context.
-  // data that needs to be used by multiple components:
-  // useState
-  // user
-  // allData does not live here. It stays in allData component
+  // if you are logged in with any user
+  // access to depsoit, withdraw, balance pages
+  // if you are logged in with admin user
+  // access to all data page in addition
 
+  let initializeUser = (email, password) => {
+    fetch(`${baseUrl}/account/login/${email}/${password}`)
+      .then(async (res) => {
+        const tempUser = await res.json()
+        setUser(tempUser);
+        getBalance()
+        // route to homepage
+      })
+      .catch((err) => {
+        console.log(err);
+        return "login failed"
+      })
+  }
 
-  // function initializeUser, call on load (useEffect only on this page)
-  // call backend to get user
-  // use baseUrl 
-  // make fetch
-  // initialeBalance
 
   let getBalance = () => {
-    fetch(`${baseUrl}/account/balance/${testUser}`)
+    fetch(`${baseUrl}/account/balance/${user.email}`)
       .then(async (res) => {
         setBalance(await res.json());
 
@@ -51,12 +70,9 @@ function App() {
       })
   }
 
-  useEffect(() => {
-    getBalance()
-  })
 
   let adjustMoney = (amount) => {
-    fetch(`${baseUrl}/account/deposit/${testUser}/${Number(amount)}`)
+    fetch(`${baseUrl}/account/deposit/${user.email}/${Number(amount)}`)
       .then(async (res) => {
         const newBalance = await res.json();
         setBalance(newBalance)
@@ -81,29 +97,29 @@ function App() {
     <HashRouter basename="/">
       <NavBar />
       {/* insteaad of context, we pass balance, user & setBalance as needed to components */}
-      {/* <UserContext.Provider value={{ currentUser: null, users: [{ name: 'able', email: 'able@mit.edu', password: 'secret', balance: 100, role: "user" }, { name: 'admin', email: 'admin@mit.edu', password: 'secret', balance: 100, role: "admin" }] }}> */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/CreateAccount/"
-          element={<CreateAccount />} />
-        <Route path="/login/" element={<Login />} />
-        <Route
-          path="/deposit/"
-          element={<Deposit balance={balance} adjustMoney={adjustMoney} />}
-        />
-        {/* depost, withdraw & balance are only accessible if logged in. if user, render these. */}
-        <Route
-          path="/withdraw/"
-          element={<Withdraw balance={balance} adjustMoney={adjustMoney} />}
-        />
-        <Route
-          path="/balance/"
-          element={<Balance getBalance={getBalance} balance={balance} />} />
-        {/* only accessible if admin. if admin, render here */}
-        <Route path="/alldata/" element={<AllData />} />
-      </Routes>
-      {/* </UserContext.Provider> */}
+      <UserContext.Provider value={{ currentUser: null, users: [{ name: 'able', email: 'able@mit.edu', password: 'secret', balance: 100, role: "user" }, { name: 'admin', email: 'admin@mit.edu', password: 'secret', balance: 100, role: "admin" }] }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/CreateAccount/"
+            element={<CreateAccount />} />
+          <Route path="/login/" element={<Login initializeUser={initializeUser} />} />
+          <Route
+            path="/deposit/"
+            element={<Deposit balance={balance} adjustMoney={adjustMoney} />}
+          />
+          {/* depost, withdraw & balance are only accessible if logged in. if user, render these. */}
+          <Route
+            path="/withdraw/"
+            element={<Withdraw balance={balance} adjustMoney={adjustMoney} />}
+          />
+          <Route
+            path="/balance/"
+            element={<Balance getBalance={getBalance} balance={balance} />} />
+          {/* only accessible if admin. if admin, render here */}
+          <Route path="/alldata/" element={<AllData />} />
+        </Routes>
+      </UserContext.Provider>
     </HashRouter>
   );
 }

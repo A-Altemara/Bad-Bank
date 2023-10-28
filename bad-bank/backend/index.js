@@ -1,7 +1,10 @@
-var express = require('express');
-var app = express();
-var cors = require('cors');
-var dal = require('./dal.js');
+const express = require('express');
+const passport = require('passport');
+const app = express();
+const cors = require('cors');
+const dal = require('./dal.js');
+// const User = require('../models/users');
+const LocalStrategy = require('passport-local');
 
 // app.use(express.static('src/components'));
 app.use(cors());
@@ -11,6 +14,15 @@ app.all('/', function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next()
 });
+
+app.use(passport.initialize());
+// app.use(passport.session());
+
+
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+
 
 // for hello world test
 app.get('/hello', function (req, res) {
@@ -28,14 +40,33 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
         })
 });
 
+
 // login to an account
 app.get('/account/login/:email/:password', function (req, res) {
     dal.login(req.params.email, req.params.password).
-        then((loggedIn) => {
-            console.log(loggedIn ? "Login Succeeded" : "Login Failed");
-            res.send(loggedIn);
+        then((user) => {
+            console.log("tada, user in backend response: ", user);
+            console.log(user ? "Login Succeeded" : "Login Failed");
+            res.send(user);
         });
 });
+
+// login to an account with Passport authentication for OAuth2
+// app.get('/account/login/:email/:password', passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//     failureFlash: true
+// },
+
+//     function (req, res) {
+
+
+//         dal.login(req.params.email, req.params.password).
+//             then((loggedIn) => {
+//                 console.log(loggedIn ? "Login Succeeded" : "Login Failed");
+//                 res.send(loggedIn);
+//             });
+//     }));
 
 // deposit funds to an account
 app.get('/account/deposit/:email/:amount', function (req, res) {

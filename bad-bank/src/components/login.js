@@ -3,59 +3,22 @@ import { UserContext } from "./context";
 import { Card } from "./shared/Card";
 
 
-export function Login() {
-    const [status, setStatus] = useState('');
+export function Login({ initializeUser }) {
+    const [statusMessage, setStatusMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const ctx = useContext(UserContext);
-
-    const isLoggedIn = ctx.currentUser !== null;
-    const [loggedIn, setLoggedIn] = useState(isLoggedIn);
-
-    function matchEmail(name) {
-        return name.email === email
-    }
-
-    // should match email first then verify password. if password fails then return false
-    function validate() {
-        if (ctx.users.find(matchEmail)) {
-            ctx.currentUser = ctx.users.find(matchEmail)
-            ctx.index = ctx.users.findIndex(user => user.email === email);
-            console.log(ctx.currentUser)
-        } else {
-            setStatus('Error: Email incorrect');
-            return false
-        }
-
-        if (password != ctx.currentUser.password) {
-            delete ctx.users.currentUser;
-            setStatus('Error: Password incorrect');
-            return false
-        }
-
-        setStatus('')
-        return true
-    }
 
     function logIn() {
-        if (!validate()) return;
-        ctx.currentUser = email;
-        setLoggedIn(true)
-    }
 
-    function logOut() {
-        ctx.currentUser = null;
-        setEmail('')
-        setPassword('')
-        setLoggedIn(false)
+        setStatusMessage(initializeUser(email, password))
     }
 
     return (
         <Card
             bgcolor="info"
             title="Login"
-            status={status}
-            body={!loggedIn ? (
+            status={statusMessage}
+            body={
                 <>
                     Email address<br />
                     <input
@@ -85,18 +48,6 @@ export function Login() {
                         Login
                     </button>
                 </>
-            ) : (
-                <>
-                    <h5>You have successfully logged in</h5>
-                    <button
-                        type="submit"
-                        className="btn btn-light"
-                        onClick={() => logOut()}
-                    >
-                        Log Out
-                    </button>
-                </>
-            )
             }
         />
     )

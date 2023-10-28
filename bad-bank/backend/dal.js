@@ -46,7 +46,7 @@ async function create(name, email, password) {
         }
 
         const collection = db.collection('users');
-        const doc = { name, email, password, balance: 0 };
+        const doc = { name, email, password, balance: 0, role: "user" };
         const result = await collection.insertOne(doc);
         return doc;
     } catch (err) {
@@ -73,7 +73,7 @@ async function login(email, password) {
         }
 
         if (user.password == password) {
-            return true;
+            return user;
         }
 
         return false;
