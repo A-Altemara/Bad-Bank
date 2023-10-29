@@ -13,9 +13,9 @@ export function Home() {
             <Card style={cardStyle}
                 bgcolor="info"
                 txtcolor="white"
-                header="BadBank™"
-                title="Welcome to your trusted banking intitiution"
-                text="Enjoy 24/7 digital banking and we cover the opening $100 deposit!"
+                header="Welcome to the Hiss-toric FuzzyPaws Bank"
+                title="We care for you with purrfect customer service! Rated 5 paw prints by our customers."
+                text="Open and account today and you'll be feline fine about your finances!"
                 body={<img src={imageLarge} className="img-fluid" alt="marble bank" />}
             />
 

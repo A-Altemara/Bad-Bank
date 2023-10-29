@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { NavBar } from './components/navbar';
-import { UserContext } from './components/context';
 import { Home } from './components/home';
 import { CreateAccount } from './components/createaccount';
 import { Login } from './components/login';

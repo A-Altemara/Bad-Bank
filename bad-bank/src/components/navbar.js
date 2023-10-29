@@ -10,13 +10,13 @@ export function NavBar() {
 
   const isLoggedIn = (ctx?.currentUser ?? null) !== null;
   const userRole = ctx?.currentUser?.role ?? null;
-  const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+  const [loggedIn, setLoggedIn] = useState(false);
 
 
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <Link className="navbar-brand" to="/" data-toggle="tooltip" title="BadBank Home Page">BadBank</Link>
+        <Link className="navbar-brand" to="/" data-toggle="tooltip" title="BadBank Home Page">FuzzyPaws Bank</Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -50,6 +50,8 @@ export function NavBar() {
             </li>
           </ul>
         </div>
+        {/* todo: make visible when isLoggedIn = true */}
+        <div class="nav navbar-nav navbar-right"> <button type="button" className="btn btn-info navbar-btn">Log Out</button></div>
       </nav>
     </>
   );
