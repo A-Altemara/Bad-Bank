@@ -4,7 +4,6 @@ const app = express();
 const cors = require('cors');
 const dal = require('./dal.js');
 // const User = require('../models/users');
-const LocalStrategy = require('passport-local');
 
 // app.use(express.static('src/components'));
 app.use(cors());
@@ -32,7 +31,6 @@ app.get('/hello', function (req, res) {
 // for data abstraction layer
 // create a new account
 app.get('/account/create/:name/:email/:password', function (req, res) {
-    // else create user
     dal.create(req.params.name, req.params.email, req.params.password).
         then((user) => {
             console.log(user);
@@ -77,14 +75,14 @@ app.get('/account/deposit/:email/:amount', function (req, res) {
         });
 });
 
-// withdraw funds from an account
-app.get('/account/withdraw/:email/:amount', function (req, res) {
-    dal.withdraw(req.params.email, req.params.amount).
-        then((balance) => {
-            console.log("New Balance: " + balance);
-            res.send(balance);
-        });
-});
+// // withdraw funds from an account
+// app.get('/account/withdraw/:email/:amount', function (req, res) {
+//     dal.withdraw(req.params.email, req.params.amount).
+//         then((balance) => {
+//             console.log("New Balance: " + balance);
+//             res.send(balance);
+//         });
+// });
 
 // get the balance for an account
 app.get('/account/balance/:email', function (req, res) {
@@ -107,11 +105,3 @@ app.get('/account/all', function (req, res) {
 const port = 4500;
 app.listen(port);
 console.log('Running on port: ' + port);
-
-
-
-
-// const port = 3000;
-// app.listen(port);
-// console.log('Running on port: ' + port);
-

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { NavBar } from './components/navbar';
 import { UserContext } from './components/context';
 import { Home } from './components/home';
@@ -16,6 +16,8 @@ function App() {
   const baseUrl = 'http://localhost:4500';
 
   const [status, setStatus] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+
   // need userName, role, balance
   // const user = {
   // name: string,
@@ -44,8 +46,7 @@ function App() {
         const tempUser = await res.json()
         console.log("tempUser", tempUser)
         setUser(tempUser)
-
-        // Todo: route to homepage
+        setLoggedIn(true)
       })
       .catch((err) => {
         console.log(err);
@@ -93,6 +94,7 @@ function App() {
     return (user.balance, status)
   };
 
+  // todo: create logout function
 
   return (
     <HashRouter basename="/">
@@ -102,22 +104,22 @@ function App() {
         <Route
           path="/CreateAccount/"
           element={<CreateAccount />} />
-        <Route path="/login/" element={<Login initializeUser={initializeUser} />} />
+        <Route path="/login/" element={!loggedIn ? <Login initializeUser={initializeUser} /> : <Navigate to="/" />} />
 
-        {/* // Todo: These need the react router way of being limited by user existing */}
+        {/* // Todo: Verify this works with OAuth2 authentication once hooked up */}
         <Route
           path="/deposit/"
-          element={<Deposit balance={user.balance} adjustMoney={adjustMoney} />}
+          element={loggedIn ? <Deposit balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
         />
         <Route
           path="/withdraw/"
-          element={<Withdraw balance={user.balance} adjustMoney={adjustMoney} />}
+          element={loggedIn ? <Withdraw balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
         />
         <Route
           path="/balance/"
-          element={<Balance balance={user.balance} />} />
+          element={loggedIn ? <Balance balance={user.balance} /> : <Navigate to="/login" />} />
         {/* // todo:  only accessible if admin. if admin, render here */}
-        <Route path="/alldata/" element={<AllData />} />
+        <Route path="/alldata/" element={loggedIn ? <AllData /> : <Navigate to="/login" />} />
 
 
 

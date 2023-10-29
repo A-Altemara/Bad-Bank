@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { UserContext } from "./context";
+import { useState } from "react";
 import { Card } from "./shared/Card";
 
 
@@ -33,7 +32,7 @@ export function Login({ initializeUser }) {
                     Password
                     <br />
                     <input
-                        type="input"
+                        type="password"
                         className="form-control"
                         id="password"
                         placeholder="Enter Password"
