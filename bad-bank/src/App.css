@@ -15,3 +15,6 @@ nav {
 .card-body {
 	min-height: 300px;
 }
+img {
+	width: 75%;
+}

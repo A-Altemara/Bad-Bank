@@ -1,5 +1,5 @@
 import { Card } from "./shared/Card";
-import imageLarge from '../pictures/marble-bank.png'
+import imageLarge from '../pictures/catalyststuff_jar_cat.jpg'
 
 
 export function Home() {
@@ -16,7 +16,12 @@ export function Home() {
                 header="Welcome to the Hiss-toric FuzzyPaws Bank"
                 title="We care for you with purrfect customer service! Rated 5 paw prints by our customers."
                 text="Open and account today and you'll be feline fine about your finances!"
-                body={<img src={imageLarge} className="img-fluid" alt="marble bank" />}
+                body={
+                    <>
+                        <img src={imageLarge} className="img-fluid" alt="kitty in a jar with money" />
+                        <p><a href="https://www.freepik.com/free-vector/cute-cat-with-money-gold-coin-bottle-cartoon-vector-icon-illustration-animal-business-flat_31094233.htm#query=money%20cat&position=1&from_view=keyword&track=ais">Image by catalyststuff</a> on Freepik</p>
+                    </>
+                }
             />
 
         </>
