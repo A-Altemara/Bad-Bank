@@ -14,7 +14,7 @@ export function Home() {
                 bgcolor="info"
                 txtcolor="white"
                 header="Welcome to the Hiss-toric FuzzyPaws Bank"
-                title="We care for you with purrfect customer service! Rated 5 paw prints by our customers."
+                title="We care for you with purrfect customer service! Rated 5 paws by our customers."
                 text="Open and account today and you'll be feline fine about your finances!"
                 body={
                     <>

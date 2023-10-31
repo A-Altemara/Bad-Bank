@@ -3,7 +3,7 @@ import { Card } from "./shared/Card";
 
 const baseUrl = 'http://localhost:4500';
 
-export function CreateAccount() {
+export function CreateAccount({ initializeUser }) {
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState('');
     const [name, setName] = useState('');
@@ -43,6 +43,8 @@ export function CreateAccount() {
         })();
         setStatus('You have created your account')
         setShow(false);
+        initializeUser(email, password)
+
     }
 
     function clearForm() {

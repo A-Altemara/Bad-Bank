@@ -43,7 +43,7 @@ function App() {
     fetch(`${baseUrl}/account/login/${email}/${password}`)
       .then(async (res) => {
         const tempUser = await res.json()
-        console.log("tempUser", tempUser)
+        // console.log("tempUser", tempUser)
         setUser(tempUser)
         setLoggedIn(true)
       })
@@ -52,7 +52,6 @@ function App() {
         return "login failed"
       })
   }
-
 
   // let getBalance = () => {
   //   console.log("user from getBalance", user.email)
@@ -71,7 +70,6 @@ function App() {
 
   //     })
   // }
-
 
   let adjustMoney = (amount) => {
     fetch(`${baseUrl}/account/deposit/${user.email}/${Number(amount)}`)
@@ -97,14 +95,18 @@ function App() {
 
   return (
     <HashRouter basename="/">
-      <NavBar />
+      <NavBar user={user} isLoggedIn={loggedIn} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home />}
+        />
         <Route
           path="/CreateAccount/"
-          element={<CreateAccount />} />
-        <Route path="/login/" element={!loggedIn ? <Login initializeUser={initializeUser} /> : <Navigate to="/" />} />
-
+          element={<CreateAccount initializeUser={initializeUser} />} />
+        <Route
+          path="/login/"
+          element={!loggedIn ? <Login initializeUser={initializeUser} /> : <Navigate to="/" />} />
         {/* // Todo: Verify this works with OAuth2 authentication once hooked up */}
         <Route
           path="/deposit/"
@@ -116,11 +118,11 @@ function App() {
         />
         <Route
           path="/balance/"
-          element={loggedIn ? <Balance balance={user.balance} /> : <Navigate to="/login" />} />
-        {/* // todo:  only accessible if admin. if admin, render here */}
-        <Route path="/alldata/" element={loggedIn ? <AllData /> : <Navigate to="/login" />} />
-
-
+          element={loggedIn ? <Balance balance={user.balance} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/alldata/"
+          element={loggedIn ? <AllData /> : <Navigate to="/login" />} />
 
       </Routes>
     </HashRouter>
