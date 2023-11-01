@@ -102,26 +102,26 @@ function App() {
           element={<Home />}
         />
         <Route
-          path="/CreateAccount/"
+          path="/CreateAccount"
           element={<CreateAccount initializeUser={initializeUser} />} />
         <Route
-          path="/login/"
+          path="/login"
           element={!loggedIn ? <Login initializeUser={initializeUser} /> : <Navigate to="/" />} />
         {/* // Todo: Verify this works with OAuth2 authentication once hooked up */}
         <Route
-          path="/deposit/"
+          path="/deposit"
           element={loggedIn ? <Deposit balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
         />
         <Route
-          path="/withdraw/"
+          path="/withdraw"
           element={loggedIn ? <Withdraw balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
         />
         <Route
-          path="/balance/"
+          path="/balance"
           element={loggedIn ? <Balance balance={user.balance} /> : <Navigate to="/login" />}
         />
         <Route
-          path="/alldata/"
+          path="/alldata"
           element={loggedIn ? <AllData /> : <Navigate to="/login" />} />
 
       </Routes>

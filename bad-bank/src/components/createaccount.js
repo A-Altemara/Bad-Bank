@@ -1,5 +1,24 @@
 import { useState } from "react";
 import { Card } from "./shared/Card";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyD3sGSgZU17iwVqaw8r2gcEEGRPfpiVu1w",
+    authDomain: "airiel-altemarafullstackbank.firebaseapp.com",
+    projectId: "airiel-altemarafullstackbank",
+    storageBucket: "airiel-altemarafullstackbank.appspot.com",
+    messagingSenderId: "212305478592",
+    appId: "1:212305478592:web:3f8e98342b969e8a2f7e25",
+    measurementId: "G-3M8EF3KY4Q"
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+
+const auth = getAuth();
 
 const baseUrl = 'http://localhost:4500';
 
@@ -19,6 +38,7 @@ export function CreateAccount({ initializeUser }) {
         return true;
     }
 
+
     // this validates the data and pushes the user into our datbase and hides our user and allows the user to add another.
     function handleCreate() {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -33,6 +53,22 @@ export function CreateAccount({ initializeUser }) {
             setStatus('Error: Password must be at least 8 characters')
             return;
         }
+
+        console.log('email in handlecreate', email)
+        console.log('password in handlecreate', password)
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                return
+                // ..
+            });
 
         // TODO: add Role field to form and set to 'user'
         const url = `${baseUrl}/account/create/${name}/${email}/${password}`;

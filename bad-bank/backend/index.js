@@ -1,22 +1,30 @@
+const cookieSession = require("cookie-session");
 const express = require('express');
 const passport = require('passport');
 const app = express();
 const cors = require('cors');
 const dal = require('./dal.js');
+
 // const User = require('../models/users');
 
-// app.use(express.static('src/components'));
-app.use(cors());
+app.use(
+    cookieSession({ name: "session", keys: ["openreplay"], maxAge: 24 * 60 * 60 * 100, })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+})
+);
 
 app.all('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next()
 });
-
-app.use(passport.initialize());
-// app.use(passport.session());
-
 
 
 app.use(express.json())
