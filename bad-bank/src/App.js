@@ -53,7 +53,7 @@ function App() {
   }
 
   let adjustMoney = (amount) => {
-    fetch(`${baseUrl}/account/deposit/${user.email}/${Number(amount)}`)
+    fetch(`${baseUrl}/account/adjust/${user.email}/${Number(amount)}`)
       .then(async (res) => {
         const newBalance = await res.json();
         setUser({ ...user, balance: newBalance })

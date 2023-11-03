@@ -83,8 +83,8 @@ async function login(email, password) {
     }
 }
 
-// fuction to deposit funds to an account
-async function deposit(email, amount) {
+// fuction to adjust funds to an account
+async function adjust(email, amount) {
     try {
         // Wait for the MongoDB connection to be established
         await connectToMongo();
@@ -168,4 +168,4 @@ async function all() {
     }
 }
 
-module.exports = { create, login, deposit, balance, all };
+module.exports = { create, login, adjust, balance, all };
