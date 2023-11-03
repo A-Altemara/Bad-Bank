@@ -1,17 +1,7 @@
-const cookieSession = require("cookie-session");
 const express = require('express');
-const passport = require('passport');
 const app = express();
 const cors = require('cors');
 const dal = require('./dal.js');
-
-// const User = require('../models/users');
-
-app.use(
-    cookieSession({ name: "session", keys: ["openreplay"], maxAge: 24 * 60 * 60 * 100, })
-);
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(cors({
     origin: "http://localhost:3000",
@@ -51,28 +41,9 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
 app.get('/account/login/:email/:password', function (req, res) {
     dal.login(req.params.email, req.params.password).
         then((user) => {
-            // console.log("tada, user in backend response: ", user);
-            // console.log(user ? "Backend Login Succeeded" : "backend Login Failed");
             res.send(user);
         });
 });
-
-// login to an account with Passport authentication for OAuth2
-// app.get('/account/login/:email/:password', passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//     failureFlash: true
-// },
-
-//     function (req, res) {
-
-
-//         dal.login(req.params.email, req.params.password).
-//             then((loggedIn) => {
-//                 console.log(loggedIn ? "Login Succeeded" : "Login Failed");
-//                 res.send(loggedIn);
-//             });
-//     }));
 
 // deposit funds to an account
 app.get('/account/deposit/:email/:amount', function (req, res) {
@@ -82,15 +53,6 @@ app.get('/account/deposit/:email/:amount', function (req, res) {
             res.send(balance);
         });
 });
-
-// // withdraw funds from an account
-// app.get('/account/withdraw/:email/:amount', function (req, res) {
-//     dal.withdraw(req.params.email, req.params.amount).
-//         then((balance) => {
-//             console.log("New Balance: " + balance);
-//             res.send(balance);
-//         });
-// });
 
 // get the balance for an account
 app.get('/account/balance/:email', function (req, res) {

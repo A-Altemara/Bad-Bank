@@ -1,43 +1,23 @@
 import { useState } from "react";
 import { Card } from "./shared/Card";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyD3sGSgZU17iwVqaw8r2gcEEGRPfpiVu1w",
-    authDomain: "airiel-altemarafullstackbank.firebaseapp.com",
-    projectId: "airiel-altemarafullstackbank",
-    storageBucket: "airiel-altemarafullstackbank.appspot.com",
-    messagingSenderId: "212305478592",
-    appId: "1:212305478592:web:3f8e98342b969e8a2f7e25",
-    measurementId: "G-3M8EF3KY4Q"
-};
-
-// Initialize Firebase
-initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
-const auth = getAuth();
 
 const baseUrl = 'http://localhost:4500';
 
-export function CreateAccount({ initializeUser }) {
+export function CreateAccount({ initializeUser, createWithFirebase, googleLogin }) {
     const [show, setShow] = useState(true);
-    const [status, setStatus] = useState('');
+    const [statusMessage, setStatusMessage] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function validate(field, label) {
         if (!field) {
-            setStatus('Error: ' + label + ' must not be blank');
-            setTimeout(() => setStatus(''), 3000);
+            setStatusMessage('Error: ' + label + ' must not be blank');
+            setTimeout(() => setStatusMessage(''), 3000);
             return false
         }
         return true;
     }
-
 
     // this validates the data and pushes the user into our datbase and hides our user and allows the user to add another.
     function handleCreate() {
@@ -46,29 +26,18 @@ export function CreateAccount({ initializeUser }) {
         if (!validate(email, 'Email')) return;
         if (!validate(password, 'Password')) return;
         if (!emailRegex.test(email)) {
-            setStatus('Please enter a valid email address');
+            setStatusMessage('Please enter a valid email address');
             return;
         }
         if (password.length < 8) {
-            setStatus('Error: Password must be at least 8 characters')
+            setStatusMessage('Error: Password must be at least 8 characters')
             return;
         }
 
         console.log('email in handlecreate', email)
         console.log('password in handlecreate', password)
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                return
-                // ..
-            });
+        createWithFirebase(email, password)
 
         // TODO: add Role field to form and set to 'user'
         const url = `${baseUrl}/account/create/${name}/${email}/${password}`;
@@ -77,17 +46,25 @@ export function CreateAccount({ initializeUser }) {
             // var data = await res.json();
             // console.log(data);
         })();
-        setStatus('You have created your account')
-        setShow(false);
         initializeUser(email, password)
+        setStatusMessage('You have created your account')
+        setShow(false);
 
     }
+
+    // duplicated on createaccount.js should be moved to shared folder when custom hook is created
+    function googleLogMeIn() {
+        console.log("google sign in clicked");
+        setStatusMessage(googleLogin(true))
+        setStatusMessage('You have created your account')
+        setShow(false);
+    };
 
     function clearForm() {
         setName('');
         setEmail('');
         setPassword('');
-        setStatus('');
+        setStatusMessage('');
         setShow(true);
     }
 
@@ -95,7 +72,7 @@ export function CreateAccount({ initializeUser }) {
         <Card
             bgcolor="info"
             header='Create Account'
-            status={status}
+            status={statusMessage}
             body={show ? (
                 <>
                     Name
@@ -136,6 +113,14 @@ export function CreateAccount({ initializeUser }) {
                         onClick={handleCreate}
                         disabled={name + email + password === ''}>
                         Create Account
+                    </button>
+                    <br />
+                    <br />
+                    <button
+                        type="submit"
+                        className="btn btn-light"
+                        onClick={() => googleLogMeIn()}>
+                        Create an account with Google
                     </button>
                 </>
             ) : (

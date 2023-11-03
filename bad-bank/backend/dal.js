@@ -120,44 +120,6 @@ async function deposit(email, amount) {
     }
 }
 
-// function to withdraw funds from an account
-// async function withdraw(email, amount) {
-
-//     try {
-//         // Wait for the MongoDB connection to be established
-//         await connectToMongo();
-
-//         if (!db) {
-//             throw new Error('MongoDB connection is not established.');
-//         }
-
-//         const collection = db.collection('users');
-//         const docs = await collection.find().toArray();
-//         const user = docs.find((user) => user.email == email);
-//         if (!user) {
-//             console.log("user not found");
-//             return null;
-//         }
-
-//         //amount is a string from the url, have to convert to a number before adding or updating the db
-//         amount = Number(amount);
-//         // Calculate the new balance after the withdraw
-//         const newBalance = user.balance - amount;
-
-//         // Update the user's balance in the collection
-//         await collection.updateOne(
-//             { email: user.email },
-//             { $set: { balance: newBalance } }
-//         );
-
-//         console.log(`Withdraw of ${amount} to ${user.email} completed.`);
-//         return "" + newBalance; //return a string instead of a number, numbers are error codes in "res.send"
-//     } catch (err) {
-//         console.error(err);
-//         throw err; // Propagate the error
-//     }
-// }
-
 // function to get the balance for an account
 async function balance(email) {
     try {
