@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path');
 const dal = require('./dal.js');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -14,7 +15,7 @@ const options = {
             description: 'API for FuzzyPaws Bank',
         },
     },
-    apis: ['server.js'],
+    apis: ['backend/server.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -28,6 +29,15 @@ app.use(cors({
     credentials: true,
 })
 );
+
+// Serve static files from the 'build' directory
+app.use(express.static(path.join('bad-bank/build', 'build')));
+
+// Add a catch-all route to serve the main HTML file
+app.get('*', (req, res) => {
+    console.log('Serving main page');
+    res.sendFile(path.join('bad-bank/build', 'build', 'index.html'));
+});
 
 app.all('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
