@@ -30,8 +30,10 @@ app.use(cors({
 })
 );
 
+
 // Serve static files from the 'build' directory
 app.use(express.static(path.join('bad-bank/build', 'build')));
+// app.use(express.static('public'));
 
 // Add a catch-all route to serve the main HTML file
 app.get('*', (req, res) => {
