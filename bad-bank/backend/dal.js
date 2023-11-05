@@ -1,29 +1,54 @@
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
+// const MongoClient = require('mongodb').MongoClient;
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://admin:NPXRaBveaSGItJaB@atlascluster.ikepdwm.mongodb.net/?retryWrites=true&w=majority";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+async function run() {
+    try {
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // } finally {
+        //     // Ensures that the client will close when you finish/error
+        //     await client.close();
+    } catch (err) {
+        console.log(err.stack);
+    }
+}
+run().catch(console.dir);
+// const url = 'mongodb://localhost:27017';
 let db = null;
 
 // Connect to MongoDB and initialize the 'db' variable
 async function connectToMongo() {
-    const client = new MongoClient(url, { monitorCommands: true });
+    const client = new MongoClient(uri, { monitorCommands: true });
 
     try {
         // Connect to MongoDB using the client
-        await client.connect();
+        await client.connect("admin");
 
         // Connect to the 'myproject' database
-        db = client.db('myproject');
+        db = client.db('airial-bankapp');
     } catch (err) {
         console.error('Error connecting to MongoDB:', err);
     }
 }
 
 // Call the connectToMongo function to establish the connection
-connectToMongo();
+// connectToMongo();
 
 async function test() {
     try {
         // Wait for the MongoDB connection to be established
-        await connectToMongo();
+        await run();
 
         if (!db) {
             throw new Error('MongoDB connection is not established.');
