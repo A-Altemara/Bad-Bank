@@ -2,7 +2,10 @@
   "name": "bad-bank",
   "version": "0.1.0",
   "private": true,
-
+  "cacheDirectories": [
+    "node_modules",
+    "react-ui/node_modules"
+  ],
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -25,7 +28,7 @@
   },
   "scripts": {
     "start": "node server",
-    "build": "cd react-ui/ && npm install && npm run build && cd .. && node server.js",
+    "build": "cd react-ui/ && npm install && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
