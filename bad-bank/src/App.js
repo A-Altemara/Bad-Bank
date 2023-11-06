@@ -168,37 +168,38 @@ function App() {
         <Route
           path="/"
           element={<Home />}
-          component={Home}
+        // component={Home}
         />
         <Route
           path="/CreateAccount"
           element={<CreateAccount initializeUser={initializeUser} createWithFirebase={createWithFirebase} googleLogin={googleLogin} />}
-          component={CreateAccount}
+        // component={CreateAccount}
         />
         <Route
           path="/login"
           element={!loggedIn ? <Login logIn={logIn} googleLogin={googleLogin} /> : <Navigate to="/" />}
-          component={Login}
+        // component={Login}
         />
+
         <Route
           path="/deposit"
           element={loggedIn ? <Deposit balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
-          component={Deposit}
+        // component={Deposit}
         />
         <Route
           path="/withdraw"
           element={loggedIn ? <Withdraw balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
-          component={Withdraw}
+        // component={Withdraw}
         />
         <Route
           path="/balance"
           element={loggedIn ? <Balance balance={user.balance} /> : <Navigate to="/login" />}
-          component={Balance}
+        // component={Balance}
         />
         <Route
           path="/alldata"
           element={loggedIn ? <AllData /> : <Navigate to="/login" />}
-          component={AllData}
+        // component={AllData}
         />
 
       </Routes>
