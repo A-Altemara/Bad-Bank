@@ -180,7 +180,6 @@ function App() {
           element={!loggedIn ? <Login logIn={logIn} googleLogin={googleLogin} /> : <Navigate to="/" />}
           component={Login}
         />
-        {/* // Todo: Verify this works with OAuth2 authentication once hooked up */}
         <Route
           path="/deposit"
           element={loggedIn ? <Deposit balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
