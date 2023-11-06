@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { NavBar } from './components/navbar';
 import { Home } from './components/home';
