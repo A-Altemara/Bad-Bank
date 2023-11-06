@@ -168,29 +168,39 @@ function App() {
         <Route
           path="/"
           element={<Home />}
+          component={Home}
         />
         <Route
           path="/CreateAccount"
-          element={<CreateAccount initializeUser={initializeUser} createWithFirebase={createWithFirebase} googleLogin={googleLogin} />} />
+          element={<CreateAccount initializeUser={initializeUser} createWithFirebase={createWithFirebase} googleLogin={googleLogin} />}
+          component={CreateAccount}
+        />
         <Route
           path="/login"
-          element={!loggedIn ? <Login logIn={logIn} googleLogin={googleLogin} /> : <Navigate to="/" />} />
+          element={!loggedIn ? <Login logIn={logIn} googleLogin={googleLogin} /> : <Navigate to="/" />}
+          component={Login}
+        />
         {/* // Todo: Verify this works with OAuth2 authentication once hooked up */}
         <Route
           path="/deposit"
           element={loggedIn ? <Deposit balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
+          component={Deposit}
         />
         <Route
           path="/withdraw"
           element={loggedIn ? <Withdraw balance={user.balance} adjustMoney={adjustMoney} /> : <Navigate to="/login" />}
+          component={Withdraw}
         />
         <Route
           path="/balance"
           element={loggedIn ? <Balance balance={user.balance} /> : <Navigate to="/login" />}
+          component={Balance}
         />
         <Route
           path="/alldata"
-          element={loggedIn ? <AllData /> : <Navigate to="/login" />} />
+          element={loggedIn ? <AllData /> : <Navigate to="/login" />}
+          component={AllData}
+        />
 
       </Routes>
     </HashRouter>

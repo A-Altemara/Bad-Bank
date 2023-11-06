@@ -21,6 +21,7 @@ const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = swaggerSpec;
 
+app.use(express.static('static'));
 
 app.use(cors({
     // origin: "http://localhost:3000",
