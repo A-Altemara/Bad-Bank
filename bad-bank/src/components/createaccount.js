@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Card } from "./shared/Card";
 
-const baseUrl = 'http://localhost:4500';
-
+// const baseUrl = 'http://localhost:4500';
+const baseUrl = 'http://147.182.251.144/:4500';
 export function CreateAccount({ initializeUser, createWithFirebase, googleLogin }) {
     const [show, setShow] = useState(true);
     const [statusMessage, setStatusMessage] = useState('');

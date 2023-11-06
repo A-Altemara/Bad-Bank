@@ -30,7 +30,8 @@ const provider = new GoogleAuthProvider();
 
 
 function App() {
-  const baseUrl = 'http://localhost:4500';
+  // const baseUrl = 'http://localhost:4500';
+  const baseUrl = 'http://147.182.251.144/:4500';
 
   const [status, setStatus] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);

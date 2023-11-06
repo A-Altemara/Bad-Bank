@@ -23,7 +23,8 @@ module.exports = swaggerSpec;
 
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",
+    origin: "http://147.182.251.144:3000",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
 })
