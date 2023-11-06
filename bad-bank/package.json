@@ -24,8 +24,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node server",
+    "build": "cd react-ui/ && npm install && npm run build && cd .. && node server.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
