@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const cors = require('cors');
 const dal = require('./dal.js');
@@ -21,7 +22,8 @@ const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = swaggerSpec;
 
-app.use(express.static('static'));
+
+
 
 app.use(cors({
     // origin: "http://localhost:3000",
@@ -40,6 +42,12 @@ app.all('/', function (req, res, next) {
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
