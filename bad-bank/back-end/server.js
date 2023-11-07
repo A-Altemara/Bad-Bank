@@ -32,13 +32,6 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use(express.static(path.join(__dirname, '..', 'build')));
-
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
-});
-
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -181,6 +174,12 @@ app.get('/account/all', function (req, res) {
             console.log('Docs in index', docs);
             res.send(docs);
         });
+});
+
+app.use(express.static(path.join(__dirname, '..', 'build')));
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
 
 const port = process.env.PORT || 4500;
