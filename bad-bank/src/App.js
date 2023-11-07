@@ -144,7 +144,7 @@ function App() {
           // Sign-out successful.
           setLoggedIn(false);
           setUser(null);
-          window.location.href = '/';
+          // window.location.href = '/';
           console.log('User signed out');
         })
         .catch((error) => {
@@ -155,10 +155,6 @@ function App() {
       console.log('No user is currently signed in.');
     }
   }, []);
-
-  useEffect(() => {
-    setLoggedIn(false);
-  }, [logOut]);
 
   return (
     <HashRouter basename="/">
