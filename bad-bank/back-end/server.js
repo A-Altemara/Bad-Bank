@@ -194,6 +194,6 @@ app.get('/account/all', function (req, res) {
         });
 });
 
-const port = process.env.PORT || 4500;
+const port = 4500;
 app.listen(port);
 console.log('Running on port: ' + port);
