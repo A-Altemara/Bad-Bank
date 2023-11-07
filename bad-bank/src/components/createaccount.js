@@ -20,7 +20,7 @@ export function CreateAccount({ initializeUser, createWithFirebase, googleLogin 
     }
 
     // this validates the data and pushes the user into our datbase and hides our user and allows the user to add another.
-    function handleCreate() {
+    async function handleCreate() {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         if (!validate(name, 'Name')) return;
         if (!validate(email, 'Email')) return;
@@ -41,12 +41,9 @@ export function CreateAccount({ initializeUser, createWithFirebase, googleLogin 
 
         // TODO: add Role field to form and set to 'user'
         const url = `${baseUrl}/account/create/${name}/${email}/${password}`;
-        (async () => {
-            var res = await fetch(url);
-            // var data = await res.json();
-            // console.log(data);
-        })();
-        initializeUser(email, password)
+        await fetch(url);
+
+        await initializeUser(email, password)
         setStatusMessage('You have created your account')
         setShow(false);
 

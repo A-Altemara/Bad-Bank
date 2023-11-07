@@ -39,7 +39,7 @@ function App() {
   const [user, setUser] = useState(nullUser);
 
   let initializeUser = (email, password) => {
-    fetch(`${baseUrl}/account/login/${email}/${password}`)
+    return fetch(`${baseUrl}/account/login/${email}/${password}`)
       .then(async (res) => {
         const tempUser = await res.json()
         console.log("tempUser", tempUser)
