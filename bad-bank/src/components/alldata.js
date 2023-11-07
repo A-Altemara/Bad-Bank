@@ -5,8 +5,8 @@ import { Card } from "./shared/Card";
 
 export function AllData() {
     const [data, setData] = useState('');
-    // const baseUrl = 'http://localhost:4500';
-    const baseUrl = 'http://147.182.251.144/:4500';
+    const baseUrl = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4500';
+
     function getStuff() {
         fetch(`${baseUrl}/account/all`)
             .then(async (res) => {

@@ -23,22 +23,11 @@ const swaggerSpec = swaggerJSDoc(options);
 module.exports = swaggerSpec;
 
 
-
-
 app.use(cors({
-    // origin: "http://localhost:3000",
-    origin: "http://147.182.251.144:3000",
+    origin: "http://localhost:3000",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
-})
-);
-
-app.all('/', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-});
-
+}));
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
