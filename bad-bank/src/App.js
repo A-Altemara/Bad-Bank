@@ -27,7 +27,7 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
-
+const nullUser = { balance: 0 };
 
 function App() {
   const baseUrl = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4500';
@@ -36,7 +36,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   // ! balance is initialized temporarily to prevent user.balance from breaking routes using it. There is a better way. I think.
-  const [user, setUser] = useState({ balance: 0 });
+  const [user, setUser] = useState(nullUser);
 
   let initializeUser = (email, password) => {
     fetch(`${baseUrl}/account/login/${email}/${password}`)
@@ -143,7 +143,7 @@ function App() {
         .then(() => {
           // Sign-out successful.
           setLoggedIn(false);
-          setUser(null);
+          setUser(nullUser);
           // window.location.href = '/';
           console.log('User signed out');
         })
