@@ -15,7 +15,7 @@ const options = {
             description: 'API for FuzzyPaws Bank',
         },
     },
-    apis: ['server.js'],
+    apis: [path.join(__dirname, 'server.js')],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
