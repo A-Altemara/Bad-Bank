@@ -1,4 +1,4 @@
-# Bad Bank Application
+# Full Stack Bank Application
 
 ## Description
 
