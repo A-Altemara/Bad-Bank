@@ -1,5 +1,8 @@
 # Full Stack Bank Application
 
+## Run it here
+https://airiel-altemarafullstacbankapp-317d1c3883ee.herokuapp.com/#/
+
 ## Description
 
 MIT XPRO Full Stack Project. Demostrates the skills learned over the course and applied to a fully functional banking application.
