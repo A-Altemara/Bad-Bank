@@ -1,6 +1,7 @@
 # Full Stack Bank Application
 
 ## Run it here
+Running is currently paused, please contact for demonstration
 https://airiel-altemarafullstacbankapp-317d1c3883ee.herokuapp.com/#/
 
 ## Description
